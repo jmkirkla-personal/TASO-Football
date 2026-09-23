@@ -55,11 +55,19 @@
   #t-chain:checked ~ .content .panel-chain{ display:block; }
 
   /* ---------- Structure ---------- */
-  section.phase{ margin: 18px 0 26px; padding-top: 8px; border-top: 1px dashed var(--line); }
-  section.phase:first-of-type{ border-top:none; }
-  section.phase > h3{
+  details.phase{ margin: 18px 0 26px; padding-top: 8px; border-top: 1px dashed var(--line); }
+  details.phase:first-of-type{ border-top:none; }
+  details.phase > summary{
+    cursor:pointer; list-style:none; display:flex; align-items:center; gap:8px; margin: 0 0 8px;
+  }
+  details.phase > summary::-webkit-details-marker{ display:none; }
+  details.phase > summary::before{
+    content:"\25B8"; color:var(--ink); font-size:1.2em; flex-shrink:0;
+  }
+  details.phase[open] > summary::before{ content:"\25BE"; }
+  details.phase > summary > h3{
     background: var(--ink); color:#fff; display:inline-block;
-    padding: 4px 12px; border-radius: 4px 4px 0 0; margin: 0 0 8px; font-size:1.05em;
+    padding: 4px 12px; border-radius: 4px 4px 0 0; margin: 0; font-size:1.05em;
   }
   h4.who{ font-family: Arial, sans-serif; font-size:.95em; margin: 14px 0 4px;
     color: var(--orange-dk); text-transform: uppercase; letter-spacing:.03em; border-bottom:1px solid var(--line); padding-bottom:2px;}
@@ -98,6 +106,13 @@
   details.fdef.sdef{ border-left-color: var(--blue); background:#fafcff; }
   details.fdef.sdef[open]{ background:#fff; }
   details.fdef.sdef > summary::before{ color: var(--blue); }
+  .backlink{
+    font-family: Arial, sans-serif; font-size:.78em; font-weight:bold;
+    background:none; border:1px solid var(--line); border-radius:5px;
+    padding:3px 10px; margin:2px 0 8px; cursor:pointer; color:#555;
+    display:inline-block;
+  }
+  .backlink:hover{ background:#f0f0f0; color:var(--ink); }
   .plain{ margin: 8px 0; }
   .exceptions{ background:#f6f6f4; border-radius:6px; padding:8px 12px; margin:8px 0; }
   .exceptions h5{ margin:0 0 4px; font-family:Arial,sans-serif; font-size:.85em; text-transform:uppercase; color:#555;}
@@ -171,6 +186,8 @@
     a.foul{ color:var(--ink); }
     #glossary{ break-before: page; }
     details.fdef, details.cite{ break-inside: avoid; }
+    details.phase:not([open]) > *{ display:block !important; }
+    .backlink{ display:none; }
   }
 </style>
 </head>
@@ -352,16 +369,16 @@
 <div class="panel panel-r">
 <h2>Referee (<strong>R</strong>)</h2>
 
-<section class="phase"><h3>Pregame</h3>
+<details class="phase" open><summary><h3>Pregame</h3></summary>
 <ul class="checklist">
   <li>Arrive on the field with the crew, no later than 15 minutes before kickoff.</li>
   <li>Inspect the entire field with <strong>L</strong> &ndash; unusual markings, hazards, irregularities.</li>
   <li>Arrange with the home-sideline captain to meet at midfield 4 minutes before kickoff.</li>
   <li>Meet with both head coaches beforehand: confirm rules-adherent expectations, timeout process, TV timeouts if applicable.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Coin Toss</h3>
+<details class="phase" open><summary><h3>Coin Toss</h3></summary>
 <ul class="checklist">
   <li>Escort captains from your sideline to the center of the field, 3 minutes before kickoff.</li>
   <li>Introduce captains to each other; advise of any ground rules/irregularities.</li>
@@ -369,9 +386,9 @@
   <li>Indicate the winner by hand on shoulder; present options in order (defer allowed to 2nd half).</li>
   <li>Signal choice to the press box; record results with <strong>U</strong> at midfield.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Kickoff (Free Kicks)</h3>
+<details class="phase" open><summary><h3>Kickoff (Free Kicks)</h3></summary>
 <ul class="checklist">
   <li>Position: goal line, <strong>opposite the press box</strong> (see the Kickoff Formation diagram on the Overview tab).</li>
   <li>Obtain ready signals from the entire crew; sound whistle and give ready-for-play.</li>
@@ -380,17 +397,17 @@
   <li>Short/onside kicks: think onside first, then anticipate a return for a TD.</li>
   <li>Watch for legal/illegal touching, fair-catch signals, and interference with the opportunity to catch.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Before the Snap (all scrimmage downs)</h3>
+<details class="phase" open><summary><h3>Before the Snap (all scrimmage downs)</h3></summary>
 <ul class="checklist">
   <li>Position deep and wide on the QB's throwing-arm side, 12&ndash;14 yards deep and wide.</li>
   <li>Check the offensive formation, count Team A, signal the count to <strong>U</strong> &ndash; closed fist for 11, open palm for fewer.</li>
   <li>Watch setbacks and the QB for illegal motion; assist <strong>U</strong> on restricted-lineman movement.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Substitutions &amp; Player Counts</h3>
+<details class="phase" open><summary><h3>Substitutions &amp; Player Counts</h3></summary>
 <ul class="checklist">
   <li>You and <strong>U</strong> own the correct count on Team A, every down &ndash; see the <a class="sig" href="#s-count">Player Count Signal</a>.</li>
   <li>If Team A substitutes, hold the snap until Team B has a real chance to match.</li>
@@ -399,9 +416,9 @@
   <li>Don't let the offense rush the snap specifically to deny the defense a chance to match &ndash; that's <a class="foul" href="#f-illegalsub">Illegal Substitution</a>/Delay of Game on Team A instead.</li>
   <li>Watch for a trick play built around hiding a substitute near the bench &ndash; that's also <a class="foul" href="#f-illegalsub">Illegal Substitution</a>.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Running Plays</h3>
+<details class="phase" open><summary><h3>Running Plays</h3></summary>
 <ul class="checklist">
   <li>Help with the tackle on your side immediately after the snap.</li>
   <li>Watch action behind the line and the runner to the neutral zone; watch the QB on hand-offs/backward passes.</li>
@@ -409,9 +426,9 @@
   <li>On an option, stay with the QB until no threat of a foul, then trail into the side zone.</li>
   <li>Watch for late hits and fouls after the ball is dead &ndash; you're the only one who signals a dead-ball foul [S7].</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Pass Plays</h3>
+<details class="phase" open><summary><h3>Pass Plays</h3></summary>
 <ul class="checklist">
   <li>Observe the near tackle at the snap; switch to the far tackle once the QB sets up to pass.</li>
   <li>When you read pass, back out at a 45&deg; angle, staying wide and deep to keep the play in front of you.</li>
@@ -420,57 +437,57 @@
   <li>Rule on the legality of the forward pass (thrown from beyond the neutral zone, or out of bounds on a run/pass option).</li>
   <li>Rule on <a class="foul" href="#f-grounding">Intentional Grounding</a> &ndash; mark the spot with your bean bag and confirm eligible-receiver positioning with the crew.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Scrimmage Kicks (Punts)</h3>
+<details class="phase" open><summary><h3>Scrimmage Kicks (Punts)</h3></summary>
 <ul class="checklist">
   <li>Position slightly behind and to the <strong>L</strong> side of the kicker, watching the snap and flight to the kicker.</li>
   <li>Rule on contact with the kicker &ndash; <a class="foul" href="#f-roughingpasser">Roughing/Running Into the Kicker</a> (see Overview flowchart).</li>
   <li>Signal if Team A is not in a legal scrimmage kick formation (open hand on chest).</li>
   <li>Watch the kick's flight; if headed toward a sideline, direct the covering official to the out-of-bounds spot.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Try &amp; Field Goal</h3>
+<details class="phase" open><summary><h3>Try &amp; Field Goal</h3></summary>
 <ul class="checklist">
   <li>Snapped on/outside B-15: position 10 yds wide of the kicker, facing the holder.</li>
   <li>Snapped inside B-15: position ~5 yds behind the holder, in line with the tee and goal posts.</li>
   <li>Rule on the kick passing between the uprights (you have sole responsibility for the uprights &ndash; <strong>L</strong> rules on the crossbar).</li>
   <li>Signal score only when positive all requirements are met &ndash; never back up a teammate's TD signal.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Goal Line</h3>
+<details class="phase" open><summary><h3>Goal Line</h3></summary>
 <ul class="checklist">
   <li>Same coverage as any short-yardage down &ndash; forward progress is usually determined by the sideline official.</li>
   <li>Do not back up other officials' TD signals.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Timeouts &amp; Two-Minute</h3>
+<details class="phase" open><summary><h3>Timeouts &amp; Two-Minute</h3></summary>
 <ul class="checklist">
   <li>Signal a full charged timeout facing the press box, pointing toward the requesting team.</li>
   <li>Only <strong>R</strong> may stop the clock for a coach's conference (Referee's Timeout).</li>
   <li><strong>Varsity:</strong> stop the clock for the Two-Minute Timeout at 2:00 in the 2nd/4th when the ball is dead; announce "Two-minute timeout" to the press box.</li>
   <li><strong>Sub-Varsity:</strong> no Two-Minute Timeout stoppage &ndash; but the under-2:00 timing rules (10-second runoff, etc.) still apply once a down is snapped under 2:00.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Close of Period / Half</h3>
+<details class="phase" open><summary><h3>Close of Period / Half</h3></summary>
 <ul class="checklist">
   <li>Sound whistle at time expiration only if the ball is dead; signal end of period with ball held overhead [S14].</li>
   <li>You are primarily responsible for determining the end of any period.</li>
   <li>At the end of the 2nd period, give the start-the-clock signal for halftime once the field is clear.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Postgame</h3>
+<details class="phase" open><summary><h3>Postgame</h3></summary>
 <ul class="checklist">
   <li>Leave the field together with the crew &ndash; neither seek nor avoid coaches.</li>
   <li>Complete foul reports; obtain incident-report input from the crew if needed.</li>
   <li>Any ejection, fight, targeting foul, or 15-yard sideline penalty requires an incident report within 24 hours.</li>
 </ul>
-</section>
+</details>
 
 <div class="pocket">
 <h3>Pocket Card &ndash; Referee (R)</h3>
@@ -509,20 +526,20 @@
 <div class="panel panel-u">
 <h2>Umpire (<strong>U</strong>)</h2>
 
-<section class="phase"><h3>Pregame</h3>
+<details class="phase" open><summary><h3>Pregame</h3></summary>
 <ul class="checklist">
   <li>Spot check player equipment &ndash; pads, braces, pants, shirts, tape &ndash; with team trainers.</li>
   <li>Arrange to meet the home-sideline captain with <strong>R</strong>, 4 minutes before kickoff.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Coin Toss</h3>
+<details class="phase" open><summary><h3>Coin Toss</h3></summary>
 <ul class="checklist">
   <li>Introduce your captain(s) to <strong>R</strong>; remain with <strong>R</strong> to witness the toss and verify choices.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Kickoff (Free Kicks)</h3>
+<details class="phase" open><summary><h3>Kickoff (Free Kicks)</h3></summary>
 <ul class="checklist">
   <li>Position: start center field, then move to the kicking team's restraining line, <strong>press-box side</strong> (see the Kickoff Formation diagram on the Overview tab).</li>
   <li>Count Team A players and instruct the kicker.</li>
@@ -530,86 +547,86 @@
   <li>Be alert for Team A <a class="foul" href="#f-offside">Offside</a>; watch for illegal action on the kicker.</li>
   <li>Watch for correct player counts on each side of the kicker once kicked.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Before the Snap (all scrimmage downs)</h3>
+<details class="phase" open><summary><h3>Before the Snap (all scrimmage downs)</h3></summary>
 <ul class="checklist">
   <li>Position 5&ndash;10 yards deep, opposite <strong>R</strong>'s side, avoiding linebacker sightlines.</li>
   <li>Know the five ineligibles (numbers 50&ndash;79); ensure at least five are present.</li>
   <li>Count Team A, signal to <strong>R</strong> &ndash; closed fist for 11, open palm for fewer; rule on illegal movement by restricted linemen before the snap.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Substitutions &amp; Player Counts</h3>
+<details class="phase" open><summary><h3>Substitutions &amp; Player Counts</h3></summary>
 <ul class="checklist">
   <li>You and <strong>R</strong> own the correct count on Team A, every down &ndash; see the <a class="sig" href="#s-count">Player Count Signal</a>.</li>
   <li>When <strong>R</strong> gives you the <a class="sig" href="#s-sub">Substitution Signal</a>, cover the ball (or stand near the snapper) to prevent the snap.</li>
   <li>Hold that position until <strong>R</strong> gives the <a class="sig" href="#s-release">Release Signal</a>.</li>
   <li>Ensure five linemen numbered 50&ndash;79 are present and on the line (except in scrimmage-kick formation) before you release the ball.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Running Plays</h3>
+<details class="phase" open><summary><h3>Running Plays</h3></summary>
 <ul class="checklist">
   <li>Key the snapper and two guards; help with tackles if an obvious foul is visible.</li>
   <li>Check for <a class="foul" href="#f-holding">Holding</a> and illegal use of hands by both sides.</li>
   <li>Cover the point of attack first, then behind the ball, then around the runner.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Pass Plays</h3>
+<details class="phase" open><summary><h3>Pass Plays</h3></summary>
 <ul class="checklist">
   <li>Observe ineligible interior linemen and the legality of their numbers.</li>
   <li>When you read pass, move toward the neutral zone; know whether the pass crosses it.</li>
   <li>Assist on trapped-pass rulings; know the ball's lateral position if incomplete.</li>
   <li>Primary responsibility for legal pass when snapped on/inside B's 5-yard line.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Scrimmage Kicks (Punts)</h3>
+<details class="phase" open><summary><h3>Scrimmage Kicks (Punts)</h3></summary>
 <ul class="checklist">
   <li>Position 8&ndash;10 yards deep, favoring the <strong>L</strong> side.</li>
   <li>Watch initial line charge for blocking fouls; be alert for illegal acts against the snapper.</li>
   <li>Watch for <a class="foul" href="#f-holding">Holding</a> and pull-and-shoot action by B.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Try &amp; Field Goal</h3>
+<details class="phase" open><summary><h3>Try &amp; Field Goal</h3></summary>
 <ul class="checklist">
   <li>Adjust depth (~5 yds), favoring the <strong>L</strong> side; watch defensive linemen over the snapper.</li>
   <li>Watch for illegal action by Team B players not stationary within 1 yard of the LOS in a 3/4-point stance.</li>
   <li>On snaps inside B-3: solely responsible for the ball passing over the crossbar.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Goal Line</h3>
+<details class="phase" open><summary><h3>Goal Line</h3></summary>
 <ul class="checklist">
   <li>Know the ineligibles; don't play as deep as on other scrimmage downs.</li>
   <li>Hustle to the pile on a quick thrust into the line &ndash; make sure the ball isn't moved forward after being declared dead.</li>
   <li>On snaps at/inside the 5, take primary responsibility for the passer beyond the neutral zone.</li>
   <li>Never signal a score &ndash; assist <strong>H</strong>/<strong>L</strong> verbally or visually if needed.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Timeouts</h3>
+<details class="phase" open><summary><h3>Timeouts</h3></summary>
 <ul class="checklist">
   <li>Take charge of the ball; confirm timeouts remaining for each team with <strong>R</strong>.</li>
   <li>Do not allow Team A to snap if Team B isn't ready (<a class="foul" href="#f-delay">Delay of Game</a>) after notification.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Close of Period / Half</h3>
+<details class="phase" open><summary><h3>Close of Period / Half</h3></summary>
 <ul class="checklist">
   <li>Keep <strong>R</strong> informed of remaining time; advise if time expired during the down.</li>
   <li>Transfer the ball to the new position at the end of each period.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Postgame</h3>
+<details class="phase" open><summary><h3>Postgame</h3></summary>
 <ul class="checklist">
   <li>Leave the field with the crew; provide input for any incident report.</li>
 </ul>
-</section>
+</details>
 
 <div class="pocket">
 <h3>Pocket Card &ndash; Umpire (U)</h3>
@@ -648,24 +665,24 @@
 <h2>Head Linesman (<strong>H</strong>)</h2>
 <p style="font-size:.9em;color:#555;"><strong>H</strong> runs the chain crew &ndash; the duties below fold in the Chain Crew's own procedures at the points where they matter to your position. The standalone Chain Crew page has the full detail if you're studying that role on its own.</p>
 
-<section class="phase"><h3>Pregame</h3>
+<details class="phase" open><summary><h3>Pregame</h3></summary>
 <ul class="checklist">
   <li>Organize the chain crew; locate the yardage chain and down marker.</li>
   <li>Check the chain against the field's 10-yard measure; confirm the tape marker is at the exact midpoint.</li>
   <li>Position assistants on the sideline opposite the press box &ndash; they move only on your signal.</li>
   <li>Brief the crew: down box goes first at every spot; chain clip is set before the ball is snapped.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Coin Toss</h3>
+<details class="phase" open><summary><h3>Coin Toss</h3></summary>
 <ul class="checklist">
   <li>After captains are escorted to midfield, take position at the 9-yard marks on your side.</li>
   <li>Do not allow uninvolved team members inside the 9-yard marks.</li>
   <li>Hold the game ball for the team on your side until the toss is decided.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Kickoff (Free Kicks)</h3>
+<details class="phase" open><summary><h3>Kickoff (Free Kicks)</h3></summary>
 <p style="font-size:.85em;color:#a34;">The printed TASO manual's diagram and its own text paragraph disagree on this one &ndash; the diagram clearly shows <strong>H</strong> on the sideline <strong>opposite</strong> the press box (matching your own understanding); a text paragraph elsewhere in the manual says "press box side," which appears to be a manual typo. This guide follows the diagram.</p>
 <ul class="checklist">
   <li>Position: kicking team's restraining line, <strong>opposite the press box</strong> &ndash; the same sideline you hold the chains on for scrimmage downs (see the Kickoff Formation diagram on the Overview tab).</li>
@@ -675,34 +692,34 @@
   <li>Once kicked, watch blocks ahead of the returner for <a class="foul" href="#f-holding">Holding</a>, <a class="foul" href="#f-clipping">Clipping</a>, and <a class="foul" href="#f-blockbelowwaist">Illegal Block Below the Waist</a>.</li>
   <li>Hold the goal line/pylon on your sideline until the ball is possessed.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Before the Snap (all scrimmage downs)</h3>
+<details class="phase" open><summary><h3>Before the Snap (all scrimmage downs)</h3></summary>
 <ul class="checklist">
   <li>Read the offensive formation; know your eligible-receiver responsibilities.</li>
   <li>Watch for <a class="foul" href="#f-encroachment">Encroachment</a> or a <a class="foul" href="#f-falsestart">False Start</a> by the offense.</li>
   <li>Watch for <a class="foul" href="#f-offside">Offside</a> by the defense.</li>
   <li>Take final position straddling the neutral zone, off the sideline.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Substitutions &amp; Player Counts</h3>
+<details class="phase" open><summary><h3>Substitutions &amp; Player Counts</h3></summary>
 <ul class="checklist">
   <li>You and <strong>L</strong> own the correct count on Team B, every down &ndash; see the <a class="sig" href="#s-count">Player Count Signal</a>.</li>
   <li>If Team A substitutes (no-huddle, or after breaking the huddle) on your sideline, give the <a class="sig" href="#s-sub">Substitution Signal</a> &ndash; that tells everyone Team B must get a chance to match.</li>
   <li>Don't let the down get snapped until Team B has actually had that chance.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Running Plays</h3>
+<details class="phase" open><summary><h3>Running Plays</h3></summary>
 <ul class="checklist">
   <li>Watch blocking in front of the runner on your side for <a class="foul" href="#f-holding">Holding</a>, <a class="foul" href="#f-clipping">Clipping</a>, <a class="foul" href="#f-chopblock">Chop Block</a>.</li>
   <li>Mark forward progress on plays to your side; if the play goes out of bounds near you, move directly into the area.</li>
   <li>If the play goes away from you, clean up behind <strong>R</strong>/<strong>U</strong> &ndash; especially late action on the QB after a backward pass.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Pass Plays</h3>
+<details class="phase" open><summary><h3>Pass Plays</h3></summary>
 <ul class="checklist">
   <li>Help check the legality of interior offensive linemen's numbers.</li>
   <li>Rule whether a pass is caught/touched at, behind, or beyond the neutral zone.</li>
@@ -710,50 +727,50 @@
   <li>Drift downfield cautiously the first 5&ndash;7 yards; watch for <a class="foul" href="#f-inelig">Ineligible Receiver Downfield</a>.</li>
   <li>On a quick screen near the line: rule forward vs. backward &ndash; give the <a class="sig" href="#s-punchback">Punch Back</a> signal instead of the incomplete-pass signal if it went backward.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Scrimmage Kicks (Punts)</h3>
+<details class="phase" open><summary><h3>Scrimmage Kicks (Punts)</h3></summary>
 <ul class="checklist">
   <li>Responsible for the entire neutral zone at the snap; know if the kick crosses it.</li>
   <li>Watch offensive backs and defenders in the line for <a class="foul" href="#f-holding">Holding</a>.</li>
   <li>Watch gunners and close receivers for <a class="foul" href="#f-kickcatch">Kick-Catch Interference</a> and valid/invalid fair-catch signals if the kick is short to your side.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Try &amp; Field Goal</h3>
+<details class="phase" open><summary><h3>Try &amp; Field Goal</h3></summary>
 <ul class="checklist">
   <li>Take regular position on the sideline, observing the snap's legality and the whole neutral zone.</li>
   <li>Snapped inside B-15: you are solely responsible for <a class="foul" href="#f-roughingpasser">Roughing/Running Into the Kicker or Holder</a>.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Goal Line</h3>
+<details class="phase" open><summary><h3>Goal Line</h3></summary>
 <ul class="checklist">
   <li>Sprint to the goal line at the snap when the ball is on/inside B's 5.</li>
   <li>Turn your hips to look straight down the goal line &ndash; you must be on the line to rule on a score.</li>
   <li>Punch the touchdown signal only when positive; otherwise mark forward progress and blow a crisp whistle.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Timeouts &amp; Two-Minute</h3>
+<details class="phase" open><summary><h3>Timeouts &amp; Two-Minute</h3></summary>
 <ul class="checklist">
   <li>Notify the coach on your sideline of timeouts remaining and time left in the period.</li>
   <li>At the Two-Minute Timeout (Varsity), join the on-field crew meeting, then relay the details to your head coach.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Close of Period / Half</h3>
+<details class="phase" open><summary><h3>Close of Period / Half</h3></summary>
 <ul class="checklist">
   <li>Keep <strong>R</strong> informed of remaining time.</li>
   <li>Between periods: reverse the chain crew's position to the opposite end of the field, following the standard chain-clip procedure.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Postgame</h3>
+<details class="phase" open><summary><h3>Postgame</h3></summary>
 <ul class="checklist">
   <li>Leave the field with the crew; complete any incident report for fouls you called or witnessed.</li>
 </ul>
-</section>
+</details>
 
 <div class="pocket">
 <h3>Pocket Card &ndash; Head Linesman (H)</h3>
@@ -793,21 +810,21 @@
 <div class="panel panel-l">
 <h2>Line Judge (<strong>L</strong>)</h2>
 
-<section class="phase"><h3>Pregame</h3>
+<details class="phase" open><summary><h3>Pregame</h3></summary>
 <ul class="checklist">
   <li>Instruct the auxiliary box operator on duties and use of the line-to-gain indicator, if used.</li>
   <li>Confirm game balls are available; brief Ball Assistants on their duties.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Coin Toss</h3>
+<details class="phase" open><summary><h3>Coin Toss</h3></summary>
 <ul class="checklist">
   <li>Take position at the 9-yard marks on your side once captains are at midfield.</li>
   <li>Hold the game ball for the team on your side until the toss is decided.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Kickoff (Free Kicks)</h3>
+<details class="phase" open><summary><h3>Kickoff (Free Kicks)</h3></summary>
 <ul class="checklist">
   <li>Position: goal line, <strong>press-box side</strong> (see the Kickoff Formation diagram on the Overview tab).</li>
   <li>Count Team B players.</li>
@@ -815,75 +832,75 @@
   <li>Responsible for the goal line and pylon on your sideline until the ball is possessed.</li>
   <li>Watch for <a class="foul" href="#f-holding">Holding</a>, <a class="foul" href="#f-clipping">Clipping</a>, <a class="foul" href="#f-blockbelowwaist">Illegal Block Below the Waist</a> in front of the runner.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Before the Snap (all scrimmage downs)</h3>
+<details class="phase" open><summary><h3>Before the Snap (all scrimmage downs)</h3></summary>
 <ul class="checklist">
   <li>Read the offensive formation; know your eligible-receiver responsibilities.</li>
   <li>Watch for <a class="foul" href="#f-encroachment">Encroachment</a> or <a class="foul" href="#f-falsestart">False Start</a> by the offense, <a class="foul" href="#f-offside">Offside</a> by the defense.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Substitutions &amp; Player Counts</h3>
+<details class="phase" open><summary><h3>Substitutions &amp; Player Counts</h3></summary>
 <ul class="checklist">
   <li>You and <strong>H</strong> own the correct count on Team B, every down &ndash; see the <a class="sig" href="#s-count">Player Count Signal</a>.</li>
   <li>If Team A substitutes on your sideline, give the <a class="sig" href="#s-sub">Substitution Signal</a> the same way <strong>H</strong> does.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Running Plays</h3>
+<details class="phase" open><summary><h3>Running Plays</h3></summary>
 <ul class="checklist">
   <li>Same duties as <strong>H</strong>, mirrored on the press-box side &ndash; watch blocking for <a class="foul" href="#f-holding">Holding</a>/<a class="foul" href="#f-clipping">Clipping</a>, mark forward progress on your side.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Pass Plays</h3>
+<details class="phase" open><summary><h3>Pass Plays</h3></summary>
 <ul class="checklist">
   <li>Same duties as <strong>H</strong>, mirrored &ndash; rule catch/touch relative to the neutral zone, watch for interference and <a class="foul" href="#f-inelig">Ineligible Receiver Downfield</a>.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Scrimmage Kicks (Punts)</h3>
+<details class="phase" open><summary><h3>Scrimmage Kicks (Punts)</h3></summary>
 <ul class="checklist">
   <li>Position outside and in front of the deep receiver(s); mark the end of the kick with your bean bag.</li>
   <li>Primarily responsible for ruling on fair-catch signals in your area.</li>
   <li>Watch for <a class="foul" href="#f-kickcatch">Kick-Catch Interference</a> and batting violations.</li>
   <li>On a quick screen/perimeter pass near the line: rule whether it actually went forward or backward &ndash; if backward, give the <a class="sig" href="#s-punchback">Punch Back</a> signal, not the incomplete-pass signal.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Try &amp; Field Goal</h3>
+<details class="phase" open><summary><h3>Try &amp; Field Goal</h3></summary>
 <ul class="checklist">
   <li>Position slightly behind the end line, center of the goal &ndash; sole responsibility for both uprights and crossbar (or per snap-distance variant, see manual).</li>
   <li>Sound whistle when the ball becomes dead on the attempt.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Goal Line</h3>
+<details class="phase" open><summary><h3>Goal Line</h3></summary>
 <ul class="checklist">
   <li>Same as <strong>H</strong> &ndash; sprint to the goal line, rule on the score only when positive, mark forward progress otherwise.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Timeouts &amp; Two-Minute</h3>
+<details class="phase" open><summary><h3>Timeouts &amp; Two-Minute</h3></summary>
 <ul class="checklist">
   <li>Confirm the game clock is stopped; time the timeout period.</li>
   <li>Coordinate radio/TV breaks; signal when the timeout is over.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Close of Period / Half</h3>
+<details class="phase" open><summary><h3>Close of Period / Half</h3></summary>
 <ul class="checklist">
   <li>Receive the ball from <strong>R</strong> at the close of the 2nd period; begin timing halftime once <strong>R</strong> starts the clock.</li>
   <li>Sound three short whistle blasts when 20 seconds remain in the intermission.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Postgame</h3>
+<details class="phase" open><summary><h3>Postgame</h3></summary>
 <ul class="checklist">
   <li>Leave the field with the crew; complete any incident report for fouls you called or witnessed.</li>
 </ul>
-</section>
+</details>
 
 <div class="pocket">
 <h3>Pocket Card &ndash; Line Judge (L)</h3>
@@ -923,7 +940,7 @@
 <h2>Chain Crew / Clock Operator</h2>
 <p style="font-size:.9em;color:#555;">Not an on-field official, but essential crew. Reports to <strong>H</strong> (the "Lines-person").</p>
 
-<section class="phase"><h3>Pregame</h3>
+<details class="phase" open><summary><h3>Pregame</h3></summary>
 <ul class="checklist">
   <li>Confirm attendance/arrival with <strong>H</strong> no later than two days before game day.</li>
   <li>Arrive dressed, ready to take the field 30 minutes before kickoff.</li>
@@ -931,9 +948,9 @@
   <li>Confirm the chain is taped at its exact midpoint.</li>
   <li>Clock operators: arrive 1 hour before kickoff, meet the officiating crew, review timing procedures and signals.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>During the Game &ndash; Chains</h3>
+<details class="phase" open><summary><h3>During the Game &ndash; Chains</h3></summary>
 <ul class="checklist">
   <li>Down box always goes first, at the forward-most point of the ball as indicated by <strong>H</strong>.</li>
   <li>Back stake sets immediately behind the down box; line-to-gain stake pulls the chain taut, no kinks.</li>
@@ -941,39 +958,39 @@
   <li>Never move the down box, chains, or change the down number unless directed by <strong>H</strong>.</li>
   <li>On a flag or possession change, hold position and inform <strong>H</strong> before moving &ndash; do not move on your own read of the play.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Measurements</h3>
+<details class="phase" open><summary><h3>Measurements</h3></summary>
 <ul class="checklist">
   <li>Hold position until <strong>H</strong> signals you onto the field.</li>
   <li>Line-to-gain stake holder hands the stake to the Umpire; <strong>H</strong> places the clip at the spot the Line Judge indicates.</li>
   <li>Extend to full chain length only once <strong>H</strong> announces ready.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Clock Operator &ndash; Game Clock</h3>
+<details class="phase" open><summary><h3>Clock Operator &ndash; Game Clock</h3></summary>
 <ul class="checklist">
   <li>Set to 12:00 at the start of every period.</li>
   <li>Start on legal touching of a free kick, or on the Referee's start-the-clock signal, or on the snap if no signal is given.</li>
   <li>Stop on: any charged timeout, after any score, ball out of bounds, a first down awarded, an incomplete pass, and the Two-Minute Timeout (Varsity only).</li>
   <li>Keep a written log of every stoppage &ndash; if time erroneously runs off during a false start, correct it immediately without waiting for direction.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Clock Operator &ndash; Play Clock</h3>
+<details class="phase" open><summary><h3>Clock Operator &ndash; Play Clock</h3></summary>
 <ul class="checklist">
   <li>Always starts at 40 seconds unless there's an administrative stoppage &ndash; then it's 25.</li>
   <li>25-second situations: penalty administration, start of a period, measurement, Team A helmet off/injury, Team B awarded a first down, after any kick down or score, timeout by either team or an official, touchback, try down, period extension, inadvertent whistle.</li>
   <li>Referee resets manually: both palms overhead pumping = 40 seconds; one palm overhead pumping = 25 seconds.</li>
 </ul>
-</section>
+</details>
 
-<section class="phase"><h3>Close of Period / Half</h3>
+<details class="phase" open><summary><h3>Close of Period / Half</h3></summary>
 <ul class="checklist">
   <li>Reverse the chains to the opposite end of the field between the 1st and 3rd periods, following <strong>H</strong>'s clip-and-reverse procedure.</li>
   <li>Halftime intermission clock: 28:00 max (Varsity, regular season) unless otherwise agreed.</li>
 </ul>
-</section>
+</details>
 
 <div class="pocket">
 <h3>Pocket Card &ndash; Chain Crew / Clock Operator</h3>
@@ -1014,6 +1031,7 @@
 
 <details class="fdef sdef" id="s-count">
 <summary>Player Count Signal (Fist / Open Palm)</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <svg viewBox="0 0 240 240" style="width:240px;height:240px;display:block;margin:6px auto;">
   <!-- LEFT FIGURE: fist -->
   <g>
@@ -1058,6 +1076,7 @@
 
 <details class="fdef sdef" id="s-sub">
 <summary>Substitution Signal</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAR0AAAGVBAMAAAAxpzj9AAAAMFBMVEX///////77///y8vLCwsLDv8G/v8C/v7+/v763wMS8vL2SlJSDg4N+g4VETlMDAwNCWor9AAAhwElEQVR42u2df3Rc5XnnP++9U/lHQPO+Izf8SGLde+XQBAKe0XhJyw/Fsh26mzTO2XbT01AC5seKtN1TINmmaXdbSJrTNpw00O2e7eJDQNiEJqFAGlM2BSM5Ids01JLGFictBs1c2Tr8sK2574iEYFlzn/1jRrJkyTBjRhpvjx7/YY3uaO53nvf58X2e973viyyZxB6GhSTF+6Pqe2wiYonEnPJKsghUcEwk/lYvDZzXfjU5fdOTRQB52AC8nni4LS120dEMpJ+/QcCJT/mO4/ndWTjmEBu7BOpRnPouDiHoSAEkaGMpTChCy5u+QUcSwaSjygPoev6p/Ja80vl8uMC1eCxem8/HY4kt5LvGusbGwu58Ihwb7ercBKhTmarxwHZtQqPVVZsGgnq+qNtK/40Q77g2N/8Lu6sv6P2MX3y+t6OQee2yHapj473X9tJyTWIg/dCOZIctLWg/QbTyx8mHOGThWKJuzcffu3Gy94KNV9x7aXnetUnd+1+7Cfw1X+2aCA/c3H7Hfdf+zT0c2FW7Dzv1wiknbpy8K3r2vnU3lRf4tN03dce7h9o2XOt08ltbvLTzg78KgkvXXlzzx9evn6ntUYSS7e6Vr83/tEQ3P/xyy9fbLs2NfbZTv5JO7/QhtbGwWPrR7tlPR3lr4qHC+KGTL2bU6pu03LHt6iH83MGMxp2cvC0egqB3kfCIxx5btAISycj8z7KGMuTuxt0W7w0BV578I4txF81+tExHczsvwOXX/9hDXNIC+uo7Q3B2xn9xLKzn8+vDo8L3YCuJUeZ7e1xWGvuhBIK6dEcLkGCcbVE9Abde/ZRtnK9im3eXtWzS2LUHcwIqcSFQju/t2Wlh7WLpByiZKpwFEpIHU86796ctlC3gXtJz36cMh69YJDxOO6KtKJSH1sNm/Zyrh0IFPLijKw3aAyirgU4X2f/QIuGJVYXDCMh8/RS8igoP9c8OV2663Lto9hMCBFqh9Hz/Yj/gQoevsRunQ+Sofv6maxcr/ihI+cZgjPG9eTx48H4g3vj0HpBpnUx2xDsm48XLX2CIosgqNe+CbYktGq9cNW0AWjLj+x9yFgtPgDJEYkUi0UTOSdFbAGfwxk7k2e6NgLiZVPuTUzfJIuXTMkQ2mcIMOn5r+PN6Lh7NhWFa89zganj8YPnzkChPBXLu5zufWCT9tMT4Qt6qbCZ58BtT3n0nf1qBxNXxtlsZDyc/BewZfqjb2bxZL1Y+pdD76c7UL93z1FNPfvNbm5lnQol7rWrjpYy80N6yBzhwzToNlC9drPF6pmXDw5XSLrVOPvPcPH54dd+v/nLC1Uf/+EZXpWnrefK/AbA3szh43PNfPuHlas2ek+3UfdAxmS0y/g+Xqj03SoT/kkTAVGKR9DN51Y5Zr45eu+PkN6xn97iW4nMypEdGAG8vAO9ZLL46OEsjErNAnJu8B1q2DTC5nY4Ob/V2APfGgUUarzmFgl3oj1s2HZTk9iwtPQwc2N3ZAxAPLpJ+5PtzXap9IU4i7oYNA0wxlYX8SGQJPSe5OHgcjuXS0y/Ge2/y5ufUyVDr7W6aRN7Z7Rswik0HGV8sPNtu/7vpF6/2xHbBIbVZoByRQcDC0PxA1ah46J3MPRotdfIxzUxVujhdozr5T7rlBIy7zwA85XAyPJHrm4THGO2uz6n02cOUPaZr8dIdvfe6UVQyJj1gllg/bjpxY6fqSLe6kyvS09T1g4cvWL2l2wl2uz27G4anNn+P9+bWnf+P28rrnPKN7VYDWNr0ZS24XfRsdzpMo8y7xvizYcNkL9sZoOXraihTAZS65a8nAZyeqQc2U84tIR7nwJ6Wz/tQ3udo2pOASInMsd9OQ/yj7e6NSzxek3s+3emDjbdEsNYCxD4rv/Ga0dD2C3/Qu62R9px+LZvNuBmVabt4OHNxWzabzWazaSm5Ol0ydjjrvfvbf7hZ73344U9sSwJuQYMe1pjEWZ/4nYcfIfs3k724F2fdtBpXbnlgKJvNZpQxKjLZYZ1ty168v1SoQz/337A9ncN23XvVS9u2p6t2kJjCuXY4Fby7dzvcmZn6jXxkuRILam3JMJ4BMC/u/l/BuV9K/80nJ3vpCFudq7bDpelncwDOTcSTHBoJuWCysPGHteNJCPt//9XesGeyF3J0bjCBAV78wx3ODS/2/b4yPi/8lrpTHxk8gALa9nTL/m5QNvmlFiNf/r1zd36r+Av8gTfx7LN8ehNsiYqF7cTbcbu3PXvg5uSdLduerEM/13yt5X969oM/2k6PMoGenorZ8M2Bu1n33g4/kifuPvevfPiNSmxWH7BTFYKuPmJgwxNf/ZUHU23yOcsHfq7D14AJOrZQLESTvbTc6Se93+q9+pu144lbHjQYk3pfSs8OtCq1ZQNg5e/vVnd2akAZNCCl0SiroTolYa7+4Kc/seLv2VAppqeLakyH2F+yvoF13/hkS636Ufw7fs8ApFLzqJ4BpHTOlztncEYejLRpt9zfDVX2qtY9PJ4T68+niqbau1pz60+8Ovzdw+pTZ6/Sh2fdQUO87Qei4j96XJ+YsjFm3ZvFZ6u9W1fV7u+9mtoKfgGQJ3Io1M+uBV0b8RPhnS11xJ/a3isWhGT04u0CiPzj0Fxapt687VgHnlq6RXL0oacGoxx64GZVMYW1v1vUFEee+M2+t86kdrJcj7/3dxuA8QmzsBlFxN+9q1jyeVe3yt5w12FAbOn9+zbJP94d2c+d8yUPs+CQR8U2DUpHuRt31ohH+Oefqm7EEn/3oes7zQLU6mj/k4NDgilE70IZXcRqxKpf8+H+IdpHBp73e9ZsXGCAx3/Uu3IHGMp3b6vDv/ThKB4J9eHejfdwcypz0jSe8MYfiPhh+/SwlFxASknfB4gLxi9Gf/6O7500ahINHO7FC3dr2+a/3uKEtePZuqMHwGlpueG+e+Dm7JxIYlM/SOZanaQFZQH0IaCoq1aX0hQCLYMn2ezRT1qNe+P2nu0A9OTqsJ8d19xHy9U/bg3uvenS9HbuabmtY3agFpv3IrStWoiNAKYqTmPRkfUjseuZpdVI8v9g19wAIz17e3q3HfAefLEe/vOpr0HXQ1OZ3df2nt/bsZk9/5Bruc2kdLGQCjRh6oMbIgOpkaoKUj8BxFaCEZIKMPz8Z9AgI2HKj6Lo1V5aPktv+T0vPX1V77b7Oh+6zp0crh1PLgvRxWCGL6aNATYeYPLLkJiCmwO/xHu/BVD+3/ermaCIba8oRLfdma7kq2QUjdwJF0yGQJYcF0Mb4xcPrC9fvE/Sb4MfxhOOR2IjwD3299dNJ8nf9u4AMDIryKn3PThjbLvv1C3b8kfp2V1PAKwBT5/ZFEA8lIV1H7r/6zPt90/edSLGVPvhpa/MwFHbdQ8EASNbiIcayp8tA7jp7HbgrGND6YXm8S1Wg8zwC7Fl+5+ezbmbz9/hvZ3KZyE8QRQBu9lCvC50/7Tl+mwlbhfD1XPb36AL6UqwGXy1ty1weoAt3u5Tr0Q4LTxR9VtHMMCGC3vv4eYNHqDsMSBZcfTRtJ62bWT3nbhZBiptp/G3Uz2/db2cyPak7/mdAkgqLdMMUPhlAwh7LBQfujObTdMQeUs8U3uy2y+9cfK/9FNSaAvaJgF1awvg3BYmGf8/vT1Lh0dNbe8Z2bN58isF0KsBVeGSrx4Gii2W8e/2XrWU/ZaUt93drHomr9NcJyfY2/3Dsrv/2PZb1Ss7eg40Ds9b18up1AXe3jVf63kAZbTVMyS+4+w7Un/d0k14E1u2Z5cOTwTjajydEzA29Korr/ZICVERCAyQXcLxmukp2Gp3NQkQKiO3YdENbiPWjkcsKoxmqkDMYR+LbXAjsXY8Kpxu1NlKBFoV9NpJxKrm4AHeKb1weLr2TBndC7HrNA1PRRPtpmrmUBJgqpF46pi/qFajYl8DkOtBWkpEel9T9FP2QK23M+b8qxpiA0dVc/AIFsVMQrW/4IFcl6MYN8fflbZVq9EAcqcGu70Ffa3XnPFKC3w8qtY7IkPAsT5f0/KhpuBxKsxxZvgMYEmRytEkPDmUwWItGoULWAyJwSbhcXKAr0EFgLRpsOq22ro1i5IvBGibE7Miz8M0C88hAW5FIj3dR5V+LDhNyqfWgsowneAtMBpaVLy/KXjiSzS06OnCi9UWRCLUaSwRbkh8jhVYDblZvdZkL3BJU/C4saosmsuhgG3Y6hgizbEfthGXZgplRThNQNzm2A+G4j6AyAJKLOoGNA0OQHXli1crvYNqAQZpGi61j1fOk7sygPI1KI19s0eElgKPrrjW9MpMgXPSG5uGJ4ZyqDgxYRGBq7xG46ktmCmNA69WWmJaAYQrQd1+Ntim1ReRN503AJm04IPSTcpfacJKK6GKZ4ZKjzTJnqOiAKJQgFaehXMsEDQHz02FXsus9KAtOPdzWkuoG4Fn6s9KpW0gtrJ2z7Mnxm7J8UgUHSYqGph+3qGy9FkJEYUm+dcvdlQSaWXAKmv9ytEPW/Y0pX5vCX/tkn+6p1tL9SsYR0Nx8uljZKQZeGLPOpe9/0XnPV70LsDk/EKyWLjHnPUQTRkvp1crTEec8/04KkQ28964YLKBB0NNGS82ohHVwcNR/mkNd2aoZo5PDTdnvACFSlrTuS8to56ZDkXfN83A40w3pQyS0TLzOIiaPGia4u85HU3H5kK1c6dAVGNZYh14jI6qud1MMyCJSqaxeGrmP4JWJtJWV6owBFFYgzQrf00T5igSQcCqyutb46b4u6rOb2MQG6F0tW5W3jBN9C+oLuOaEf3M2U3iq6dKbE3QT/BmyGtY3Ftzyk0kghr5ZkIv/Hvt1fQBNVZGzrbaDfoUv6+tJqyxckzUHOw3vUlwapyhJmpdSiD+KfVW01ea0DXZkPO2K15Vx3zcW98sUSsbP7Uapaal826jx0ufcrxULQM2UaN/6bfrX29bv6eJZ2nEqbXClKUBXnM+1T+3NPpptAEsFR7LGaaf/2/w6DNsvOzyeC3j+beDR9QZhmc5/pyJ+plamsRWz/zXwjppkn7eOfvFuG0Yj22I/URzy/em4zlgzyh/l9lGbKX5+nn9zLIfUYu2heNp8bHi4nH709PPGYYn1LJYeOro956QUecM0M+JMZJekotVJ9aKR82OgNc3P7/PZoGxYdG2tHVO443R3BjY/PoreSpDXzI8araVWL14AahGPHMAhCi7WAnsNMZLSogOF8nBTsd+FOioyf5VOqVHNScensTsS9Jk/Zw6u6tmxx87NwQ11vdPRz9znco2vZ+g59h0Y/VzGou7Q4fZm5OXmh1/SnPHK2yK/cyyX3tSBGqyf8UKKqsPF4GOnQaeSAN6Zvc61aR+lJ7rT2qRAnTtz3/NmLM+Fc9vznhZzgR7ljnuNZvfN0k/eo46tPWaaj/qxAZKlVXHSjcVj5zQT+URJ2lyPXji9ukzwb9mFe/VyLxIBWqN+f1EfVMZHh3bptrPiXBoF4Olvs16eY4ZN4k/64XCdNPsZ2791eimcwPGSzcXz/zb7zlD/KuuS0s3XupDZ4r96JPdq0Gm7fh14LEnx8MTKBpl2co5Lf2ELKrUzDdO/iF5hthPlZipRQrQdcef3kV195r5xsx4XV/5MVlcgMq+HXmnJQuvn278sXpx7KdG/ejpw6zixUpclUWwLfXqZ74VN6Zynn7St+5+1LT56gaPmPIt8HO14tHzAlCD/d1YAyROf+axqfFnyeT0+Y+cYfo5w8brTKu/pvcFaRKeedai1p9h+kmeYXimp+Ab25k6bTyq4QS6Hjwz06WF6buLFy5GIKoxfx1YMQCkTOv3/qOd3deIMOiJJccj52UApHgkOBF3RGwEkQlTS6+foLqx/fgsY4nyEx4g+7qXHI8a0RrAJEdP/DJOdVQMaentWe7S89NqR1Vn7aWl96/PVv8fXyCDNXT/hDrPAxo6sVhVTS+qXfp+y0wIfrF0IkvY9r5FiD+14FFE1TNhvz3L3UmV7YlAtJR4hOpsTuzPTqK2etSK06+XeLyk6kFRao4qJipZRH18qe0n2VbRgJ3LMVT1QfNMuNT+VTWfk6b+k1XKkbJLjKdaip686NCaQsMdvpbnPafvN3KSIkozW+3UoCBd28VEDfxOpOCBRPs659bsWkUFHxg3Xg0+ChKZtyTniVC/9VyEnhryGA/NvJOmzUghY6JcLcvF38ww7HmVDkWt+d2a8fEFn2tQ2g6YqEEM2lb5Rg3xXplTNMSUIWoooU/4tfZD6r7wVg2AebqOqGe/gkUWpTHgnjF4KjicM67/Y5foRm+2olyfCKmJo3uX6Iu/2aH0B/YGlVPuf5r4jTNhlOTz1R/KLMuy/BsSBQTvu160hT9l34K51dhsuTAnfCi57NZjtxQrhC7yQ4Lbb49MwVRW4aSA963sP+3CLF0QEZE47S2cqQPnYzv8uZfURXK8uieaR2faebSstO+ranIO3HXRodOL/A5wUL/wGFN/W0qVFsYTJm/onksqlHr+xI/+q1/0M8qfOM9Ug2zqfetbtJLTTkXBePpsOcTWTXph3ul0RGNzd6J1zBo5Xs3EbWzd7209rPy+6VMT24p+Nv+Mc1o0PwHYkYM+Kuh7r144x6xfpc9Kz6Gkop3pjONEiQeeO5j4pH/uRowqAlyoTfTrZc8WTxNP8VIugoIXHUrraB/djDtKR0ZCX/qJYd8HcHUEjjjdUZTSscPIKGSTe1AbI3m39rsVo1/jM/dnhko6/t53+MwdOio4W6RgO4lMlKs7DVwpY8pvu/Do4DPZR56Mxpyt8kKx/CvFcsbTkLqiX3YBJvXHz/bt75LhrfGOhMR98Y6OwSdHsgWJ/6kQb4ik+C2ZvEIOXS5SvFxecbqO9A27X43Ho8PKOS08mcfGLjmekB39sbpSjnTJkS75judBx5NdcsgDOqLervBsOdQlvR0SXxqNrYu7H81cIsN6KHYei7NrouPvkENBoZxdIZMdhUMXx+kuGXusnD6988SHN0YF94NkIA2vCG+E+ActmAsr53ylSnz09f1S/bPygD3nJfXNz5U00mZZPzP3rC2iiFd6ubz6DAyiVPtp4fH0OQ9wLMp5qMouwdXTbf4lGmcVYD3W3L+1cs8QYuuuZs1dAnEB2IOEGoGcVuEUzmsg+LbOiSkHcCr7ctICZw9GV70PYnByle2wlGOy5+1C+Up50RAXbUoDRD74lnarPmLA8TWljThpC5C2tKcpe0Q+nkbA2Pr0U2ovgTatvPSfNyTPPy+cBhOCqLUTtzrGqs/QzsivWPVAtRUEIZS34txa2WErCVgtCkJELG4OVYAcAsX69NOulEBpaJA1E23/+kA0Q2o9aPccfeWHP3w7aXUwct9/HZXjWwzgIa+91E8GkqZy9kxoFZBEqRA04hN6uHU9se8AhfZQA+1r7blrVVbHlZLVIiGEEv7sWDg4xDmC5QtPhLSCpuhBqF/Wt/93a+G1ssWCWo8YECuOy+RZaMvtEM9fcv8WeBSB4p1pJUPun/VCG0pvxDeoDMaUzBbWmpjEJg//F9eH0at2xV/SVqLU6Q29/O8n5faIc9s89F3qz8i5/wPloL7g0rIq7OyIrUdKo+vrmCvvsoLEw8pdHcU7NkSHr5RdBTk8JJOPyvG0SkTxro4+kTGns+NI39F00Bf3yeHE8SuLR4LEC/nDbiI68i6RZ1ZHY86V8oKUO8+W4S6JH7isWNyZKMiRSIbr4z+olK+J8vpgJjnipOLRdOQkKWmxRvJ2optiGGikP+l4UIg6tTWyJ209O+J6JPucTrFGR7mMDHQYUcni/u6iMhLtS+viQV9HSkeD9VGhyloXo0GlOnF8AoMyOB6oNk9DKgAcH4WTAaVwM04nKCfQDo7nBFVip1HaOJ04Gk/hq2xlXsgEdenHWG0iTN4oHREF8ahfmQUstZeIrZ7wxIJKhhpUMsSX0IgOvVGPgoZIeaHWpaRVOlKxKrUXDFhtpCREyiSVqKj2pzFdYNWKEuacf1Hnvlw67/xVxcnzCv6qVa+et8p7/pyX32gLVuYVys+XTPTGsRWH0y9bE1hWmdH26OVg1aoVlol0adVKteLlaJU9/43zVGrlG+qcw60TcerYeeb1yZ8dW3HsXFuPfvyopCm1R8qItX5BtVuwnsVISUeWZCpCF1IC6NCzSselklfwsFbr0LSGGKtBSh7Kxql8hUlqa2xSRaKiVFzyGrvH+LIsy78FcfxKkWOcuQlauT4dmbZO1z+pPlK+mr2FqPK0SnmNw7NhZ2VT0BUPzuXjzrqHn3pyk/vwk+m5zWLH/dac32TSnpNKNw7P1rjyYV3x3A81HX1yZHNH3+HMXJz+lfKdYBa18L1sqt79XZ03jZVVgn7Su6R8N688PXL7v5z0aG6kMMVZ9x997ctr612//WZ4jv64cnTVwN654bVkgM5A6ZO2cXFe2vu7s0vc1nM6J+pdjfNmeF66pNIS/ekvnkQXhoB94cnPrFAsfCI3+/XEuuSonAYetS5/dMPAJveRFzr9dU8/u2HnRfkjlxefW/P0C+4j4zuffrzvhY6nx78xsitwPzpSLO4IlALOjuHV4pErxjd9dPyLlxePPH2k031q8O8u7tv1yDPu5SM7U56z8gH1aub8gWczfn31qWkrxB+T73cdyQ93bp3qK46tjuKLZNLtlwe2ypHo+GOyuV+ORlPBRdFTUXmT46itMqzp2r86kgEpDsjY6kiKMtbxqBzaKkcKx1cXHznuKfUOiV/IRgfyz6Tqw+P7j8nj0a7C8Nbj66Lhs+WQG8Wro8lgq3R3yeG+sUviTJc81x9ntsbZ/snAn8bznY4o3hLFmwvH3SjeXDjud8nwu+Xw1sNdx98Zb3JoK5SzH4g3bT0eeHWNlw7v5y9+82YvxD1HD7UCVtCTBcu2HMf+w6dCDOy1qL9k3Kr8zHKo9hAGkT1WYekL3ZQglsknvvuATKgHUBZGUvRbd2199cWoQUrPr8Fsw2GfBU8rjxbP0Av2QpvGVpqCFifEn+n7h0AJ0Sitxb8LUSiNxF/QatN0q8yQQV1fX31aKkFuROO8ftW+6dM1QluOREQj+/eBgIC6BZOOwiEcC8rJkUZAWcRCwdIKkqycwnXN129pFaAVwrqWKiYAUYq0tZSvTWs2Pg8hePr4BCpTpBRjURUiOWU/v/7/Kj8U0CXSqlKkeigNAcqJMSXIKfhKzqs2YtEwUZ9+pBXifBEvsy9JNUeGIIpO0OLp6gT52cfCzh/f0lpAIshccssfM+vpooKWCPAg9nD2ZTRo1JAFLb0TdeHxlTCResWexwMxGx0glE4A7qPyJIpYLEys/sAntopjxDub8+Rnlzgh5Kp9RJW+TcQSWVCt/c63V2jQyOZBkpTrzBmB2y87006fjD/jRnFeDjm3S1GOt/XLri4ZU26/bH5UnumXHVvjkZFdCqWzfVLM71KJKN4QxRuiOBvFm6OxYKsc6pLDWr1D4hcCjfNofMAtPDc07NTXH4t0nNej9OSLt6y9plAAb/fgSF9Bx3mbzP8kQ5xXki/FeWVVEHy0O6XteM9gdPR3xcuPUBzRxbyGFS9+avS6/Gg5b33vjUcK/1qA5FcKP4qvef3otcnaDVoB3sEMMqhM6ZJcciLzxnNj7clgoEPn1qvy8HoVjXo6Ujqe0Pbln1rND64toHyDhO370wxlxBrY3XpBcjAwYDVxwXboooT4YWd5Pxmp+0RSk/KVMSrwjROkLpKxwJBKKXwn8JVylK+CQAU65T96YMuWwnAGlDaBn/JTAYFvUinTEZV9FWgVBI7jg1EBHpDyjTGm7hnsAFCBAWU06h1ySKUA5WjAOFUKoFHu0H6cvh3V4G+08itxwGinUMYox2hQxqCClNLgowL8+vAkADEGKWiMkULKXMS5aasjdFgKIoz1Cf1IJUcDUbc8smXFBz47AUqjxCqrTcEr6YK3TqvN/dradicZYv1CobJUSem8ktN4dFZPPz8TgJsvFu/oJEAFgU75+DoIdMpLaRWo4JHikWyHW10AmPKVUr4yxtFXFIvDSqcw4KV85UNKA0YZv04o8zzRycCpLFAFmvEFgolKeZRzizhJd6ohN3W+v36Zd8yBo1etWskbC/IkJjy1cv4l88bKVatWvrFoZeApedspaIzRjbt5Yr7uRVsWbGhZi9ILrMPQkdKLt+PfW2nPMeA4rp55rTznhGodHNd1lxCP8lSQyI93nvC5y4tHZ1bQX1E8fH7xaKdqvLGcSuRgcL2UTHJGP/l/Gp1Zl6heUebVUuptLEGuG49qX7nt4jtO1IJxsPbbM0duKalMReklxKP+hP2z9mtSEqYlPw2usu4oNg3Fk3JM9sEM/obNtG3Zstndslmt2el1fGmzu1kptbJ7RfdGSlsygeNuSfsSeqiOzQTOhgc3O5V5ngZvntQWuAPFZztXjw/uWhPJ2IXFXesG8jsvi6Y+Fgc4/SJjH48fiZ+h82P5MaXhsbgv3qk69vYdSbdFx93+OOM1FE/gdx3virP9P+ma6nxUvt8xHmyd7Bpzo/jRuFO5X5XxXY/JP0fHzfnFjxS7gcfi3dHh4MrjV8ozi4LHc4cOXRRvkEOXy3fOkkMdY250qCvOFuINxU7XOUuG3cdkU3+su8rZ6PsePBZnHouD/ql3yaG3jWch+ymlPd646g2w+Mc595WhFbpCSuTXc0kNOkaUZeILscIHEHW/SkbiNWAl9EJ4kqOa8bzCWsyUdb3bFe/oxSLjL4q3VkFmDxYy2n1SqxBQg5bbPvfxLzbg0YeF8Exo8MNKYeXluEs8pnquAqySwf0C0UYEIuSJD1+nqzyuN/xSNL2m4208AbHgeIWcs08KJC1SuF1duD/kWF8fYKppNgkCBcs1u/u9SjUrfGT9dai1IEyfO94oPJK0brrzEowhxwAixzhX+9N8TEOFsXpW7XC7LYCnpfSF2EMcMG/r0KyF8LS259QXzz1mmZC75Dzb3yo5t/PPQUUliJOs+DjElvAutemXKytXWm/7Wc5zfFaESKSJw4b6uzGXR/HjmSuP9o35Tke+00tdERV3rYvinQpoK5Q3F+TxIdm1Lh8fyHiw9elnizvdvvjJ6PhFUr4siv+ksXs8AJcf0PC3B9LgXpUB9dEf6stGBh4HlHf5DxJP7/3nvQO7vHVPbXKALR1P73JSq5/1Lt91+d69D+8defz08+nC38QRPw5JJSng+IUYZbSUkqXWUUEZlQTbmioJ4sShQFAIWkOlUYX2iSTWC5OhNNJ+IFY6BJ0qAAUPxCZHvdHWgxkQu1bnVTEsJcN8KEY8iFVyIooL5KFs8XLto5lG66c9bA9RyVQe5RcEp3107aiPFMBJRsaEHhL6UBBfQgI9lHS0lEiWkozqVkfCRj8cryrzTYBTbWa7HqgAMMrHCYKUBqMCH/BwAx8chQPa8XA6G23PxnjgYwDlgzJGU1ntqCpxSGHQmEqdbQDjeDogpRXKb7h7LcuyLMuyLMuyLMuyLMuyLMuyLMuyLMuyLMuyLMuyLMuyLMuyLMuyLMuyLMuyLMuyLMuyLMuyLMuyLMuyLMuyLMuyLMuyvD35f1A1+uPo849bAAAAAElFTkSuQmCC" alt="TASO Optional Signal O12: Team A substitution requiring Umpire to cover the ball" style="display:block;margin:8px auto;max-width:220px;border:1px solid #d8d8d8;border-radius:6px;">
 <p style="font-size:.78em;color:#777;text-align:center;margin:0 0 8px;">Official TASO Optional Signal O12 &ndash; "Team A substitution requiring Umpire to cover the ball"</p>
 <p class="plain"><strong>What it is:</strong> The mechanic that guarantees the defense actually gets a chance to match an offensive substitution before the ball is snapped.</p>
@@ -1074,6 +1093,7 @@
 
 <details class="fdef sdef" id="s-release">
 <summary>Release Signal</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <svg viewBox="0 0 260 220" style="width:260px;height:220px;display:block;margin:6px auto;">
   <rect x="78" y="185" width="15" height="30" rx="4" fill="#1a1a1a"/>
   <rect x="100" y="185" width="15" height="30" rx="4" fill="#1a1a1a"/>
@@ -1098,6 +1118,7 @@
 
 <details class="fdef sdef" id="s-punchback">
 <summary>Punch Back (Backward Pass Signal)</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <img src="data:image/png;base64,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" alt="TASO Optional Signal O2: Eleven Players / Backward pass (Punch back)" style="display:block;margin:8px auto;max-width:220px;border:1px solid #d8d8d8;border-radius:6px;">
 <p style="font-size:.78em;color:#777;text-align:center;margin:0 0 8px;">Official TASO Optional Signal O2 &ndash; "Backward pass (Punch back)"</p>
 <p class="plain"><strong>What it is:</strong> The signal for "this pass actually went backward, not forward" &ndash; used instead of the incomplete-pass signal.</p>
@@ -1114,6 +1135,7 @@
 
 <details class="fdef" id="f-falsestart">
 <summary>False Start</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <p class="plain"><strong>What it is:</strong> An offensive player moves &ndash; a flinch, a twitch, a hand coming up &ndash; after the ball is ready for play, in a way that simulates the start of the snap. The snapper shifting or moving the ball, a back jumping like the ball's already coming, and a lineman's quick jerky movement all count. It doesn't matter whether the defense reacts.</p>
 <details class="cite"><summary>NCAA Rule (7-1-2-b)</summary><div class="cite-body">
 <blockquote>"Each of the following is a false start by Team A if it occurs prior to the snap after the ball is ready for play and all players are in scrimmage formation: any movement by one or more players that simulates action at the snap... the snapper moving to another position... a restricted lineman moving their hand(s) or making any quick movement... an offensive player making any quick, jerky movement before the snap."</blockquote>
@@ -1128,6 +1150,7 @@ Exception: it is not a false start if a Team A lineman immediately reacts when t
 
 <details class="fdef" id="f-encroachment">
 <summary>Encroachment</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <p class="plain"><strong>What it is:</strong> An offensive player is in or beyond the neutral zone after the ball is ready for play, once the snapper has touched or simulated touching the ball, but before the snap.</p>
 <details class="cite"><summary>NCAA Rule (Definitions, Sec. 18, Art. 1)</summary><div class="cite-body">
 <blockquote>"After the ball is ready for play, encroachment occurs when an offensive player is in or beyond the neutral zone after the snapper touches or simulates touching the ball before the snap."</blockquote>
@@ -1141,6 +1164,7 @@ Exception: the snapper is not encroaching when in the neutral zone to put the ba
 
 <details class="fdef" id="f-offside">
 <summary>Offside</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <p class="plain"><strong>What it is:</strong> There are actually two versions of this foul, with different enforcement:</p>
 <div class="exceptions"><h5>The two variants</h5>
 <ul class="checklist">
@@ -1160,6 +1184,7 @@ Penalty (live-ball, at the snap): 5 yards from the <strong>previous spot</strong
 
 <details class="fdef" id="f-holding">
 <summary>Holding (Offense)</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <span class="safety-flag">Judgment foul &ndash; not purely procedural</span>
 <p class="plain"><strong>What it is:</strong> Using the hands or arms to grasp, pull, hook, clamp, or encircle an opponent in a way that illegally impedes them. Legal use of hands requires the hands in advance of the elbow, inside the frame of the opponent's body, at or below the shoulders.</p>
 <details class="cite"><summary>NCAA Rule (9-3-3)</summary><div class="cite-body">
@@ -1174,6 +1199,7 @@ Penalty: 10 yards from the previous spot; Team A fouls behind their own goal lin
 
 <details class="fdef" id="f-clipping">
 <summary>Clipping</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <span class="safety-flag">Safety foul &ndash; flag at every level</span>
 <p class="plain"><strong>What it is:</strong> A block against an opponent where the force of the initial contact is <strong>from behind</strong> and at or below the waist. <em>Not the same foul as Illegal Block Below the Waist</em> &ndash; see that entry. The direction (from behind) is what makes it Clipping.</p>
 <div class="exceptions"><h5>When it's actually legal</h5>
@@ -1197,6 +1223,7 @@ Penalty: 15 yards. Previous-spot enforcement for Team A fouls behind the neutral
 
 <details class="fdef" id="f-blockbelowwaist">
 <summary>Illegal Block Below the Waist</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <span class="safety-flag">Safety foul &ndash; flag at every level</span>
 <p class="plain"><strong>What it is:</strong> A block below the waist that is <strong>not</strong> from behind (that's Clipping) &ndash; legality instead depends on who's blocking and the direction of contact. A tackle-box lineman or a stationary back may block below the waist inside the tackle box, but only if the force of contact is "directed from the front" (roughly 10 o'clock&ndash;2 o'clock relative to the player being blocked). Everyone else, and any block after a change of possession or during a kick (except against a runner), is illegal.</p>
 <details class="cite"><summary>NCAA Rule (9-1-6)</summary><div class="cite-body">
@@ -1213,6 +1240,7 @@ UIL adds: for a lineman's position to count as "completely inside the tackle box
 
 <details class="fdef" id="f-chopblock">
 <summary>Chop Block</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <span class="safety-flag">Safety foul &ndash; flag at every level</span>
 <p class="plain"><strong>What it is:</strong> A high-low or low-high combination block by two players against the same opponent (not the ball carrier), anywhere on the field, with or without a delay between the two blocks &ndash; where the "low" component lands at the thigh or below.</p>
 <div class="exceptions"><h5>When it's actually legal</h5>
@@ -1233,6 +1261,7 @@ Penalty: 15 yards, previous spot.
 
 <details class="fdef" id="f-roughingpasser">
 <summary>Roughing the Passer / Running Into or Roughing the Kicker</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <span class="safety-flag">Safety foul &ndash; flag at every level</span>
 <p class="plain"><strong>What it is (passer):</strong> Unnecessary rough contact with a passer once it's obvious the ball has been thrown &ndash; forcible head/neck contact, driving the passer to the ground and landing on them punitively, or any hit that was avoidable after the ball left their hand.</p>
 <p class="plain"><strong>What it is (kicker/holder):</strong> See the flowchart on the Overview tab &ndash; Roughing (endangers the kicker) is 15 yards + auto first down; Running Into (just displaces them, no danger) is 5 yards with no auto first down.</p>
@@ -1251,6 +1280,7 @@ Exception: a defender blocked into the passer with no opportunity to avoid conta
 
 <details class="fdef" id="f-grounding">
 <summary>Intentional Grounding</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <p class="plain"><strong>What it is:</strong> The passer, to conserve time or yardage, throws the ball forward into an area with no eligible Team A receiver &ndash; or throws it straight to the ground to stop the clock.</p>
 <div class="exceptions"><h5>When it's actually legal</h5>
 <ul class="checklist">
@@ -1271,6 +1301,7 @@ Rulebook penalty text: loss of down at the spot of the foul. (See the verificati
 
 <details class="fdef" id="f-illegalpass">
 <summary>Illegal Forward Pass</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <p class="plain"><strong>What it is:</strong> A forward pass thrown from beyond the neutral zone, thrown by Team B, thrown after a change of possession during the down, a second forward pass on the same down, or thrown from behind the line after the runner has already carried the ball's entire body beyond the neutral zone.</p>
 <details class="cite"><summary>NCAA Rule (7-3-2-a&ndash;e)</summary><div class="cite-body">
 <blockquote>"A forward pass is illegal if it is thrown by a Team A player whose entire body is beyond the neutral zone when the ball is released... or it is the second forward pass during the same down."</blockquote>
@@ -1284,6 +1315,7 @@ Penalty: 5 yards from the spot of the foul, plus loss of down if by Team A befor
 
 <details class="fdef" id="f-opi">
 <summary>Offensive Pass Interference</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <p class="plain"><strong>What it is:</strong> Contact by a Team A player beyond the neutral zone that interferes with a Team B player during a legal forward-pass play. It's the offensive player's job to avoid the defender, not the other way around.</p>
 <div class="exceptions"><h5>When it's actually legal</h5>
 <ul class="checklist">
@@ -1304,6 +1336,7 @@ Penalty: 10 yards from the previous spot.
 
 <details class="fdef" id="f-dpi">
 <summary>Defensive Pass Interference</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <p class="plain"><strong>What it is:</strong> Contact beyond the neutral zone by a Team B player whose intent to impede an eligible receiver is obvious, and which could prevent them from receiving a catchable pass. A catchable pass is assumed when in doubt.</p>
 <div class="exceptions"><h5>When it's actually legal</h5>
 <ul class="checklist">
@@ -1325,6 +1358,7 @@ Penalty: spot of the foul, first down, if under 15 yards beyond the previous spo
 
 <details class="fdef" id="f-inelig">
 <summary>Ineligible Receiver Downfield</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <p class="plain"><strong>What it is:</strong> An originally ineligible player (usually an interior lineman) gets more than 3 yards beyond the neutral zone before a legal forward pass that crosses the neutral zone is thrown.</p>
 <details class="cite"><summary>NCAA Rule (7-3-10)</summary><div class="cite-body">
 <blockquote>"No originally ineligible receiver shall be or have been more than three yards beyond the neutral zone until a passer throws a legal forward pass that crosses the neutral zone."</blockquote>
@@ -1338,6 +1372,7 @@ Exception: doesn't apply if the passer is legally throwing the ball away and it 
 
 <details class="fdef" id="f-illegaltouch">
 <summary>Illegal Touching</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <p class="plain"><strong>What it is:</strong> An originally ineligible player, while inbounds, intentionally touches a legal forward pass before it's touched by an opponent or an official.</p>
 <details class="cite"><summary>NCAA Rule (7-3-11)</summary><div class="cite-body">
 <blockquote>"No originally ineligible player while inbounds may intentionally touch a legal forward pass until it has touched an opponent or an official."</blockquote>
@@ -1351,6 +1386,7 @@ Penalty: 5 yards from the previous spot, loss of down.
 
 <details class="fdef" id="f-kickcatch">
 <summary>Kick-Catch Interference</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <p class="plain"><strong>What it is:</strong> A receiving-team player attempting to catch a kick that has crossed the neutral zone must be given an unimpeded opportunity to do so. It's a foul if, before the receiver touches the ball, a Team A player enters the area of the receiver's shoulder width plus one yard in front of them.</p>
 <div class="exceptions"><h5>When it's actually legal</h5>
 <ul class="checklist">
@@ -1370,6 +1406,7 @@ Penalty: 5 yards from the previous spot, loss of down.
 
 <details class="fdef" id="f-horsecollar">
 <summary>Horse-Collar Tackle</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <span class="safety-flag">Safety foul &ndash; flag at every level</span>
 <p class="plain"><strong>What it is:</strong> Grabbing the inside back or side collar of the shoulder pads or jersey (or the nameplate area) and abruptly pulling the ball carrier down. Applies to any ball carrier, including a potential passer, inside the tackle box.</p>
 <details class="cite"><summary>NCAA Rule (9-1-15)</summary><div class="cite-body">
@@ -1384,6 +1421,7 @@ Penalty: 15 yards, previous spot, automatic first down.
 
 <details class="fdef" id="f-targeting">
 <summary>Targeting</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <span class="safety-flag">Safety foul &ndash; flag at every level, no exceptions</span>
 <p class="plain"><strong>What it is:</strong> A player takes aim at an opponent to attack with forcible contact that goes beyond a legal tackle, block, or play on the ball &ndash; leading with the helmet, forearm, fist, or shoulder at the head/neck area, or lowering the head to strike with the crown of the helmet. Launching or crouching-then-thrusting upward into an opponent's head/neck both count. When in question, it's a foul.</p>
 <details class="cite"><summary>NCAA Rule (9-1-3 / 9-1-4)</summary><div class="cite-body">
@@ -1400,6 +1438,7 @@ UIL replaces the NCAA multi-foul escalation with: 15 yards, automatic first down
 
 <details class="fdef" id="f-unsports">
 <summary>Unsportsmanlike Conduct</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <p class="plain"><strong>What it is:</strong> Actions that interfere with orderly game administration, taunting directed at an opponent, or abusive/threatening/obscene/celebratory conduct demeaning to the game. Certain acts are automatic: brandishing a weapon, a throat-slash or nose-wipe gesture, removing the helmet after the ball is dead (outside a timeout or equipment fix), or dead-ball contact fouls after the whistle.</p>
 <details class="cite"><summary>NCAA Rule (9-2-1)</summary><div class="cite-body">
 <blockquote>"There shall be no unsportsmanlike conduct on the part of players, substitutes, coaches, authorized attendants or any other persons subject to the rules, before the game, during the game or between periods."</blockquote>
@@ -1413,6 +1452,7 @@ Penalty: 15 yards. Live-ball fouls by players enforced from the previous spot; l
 
 <details class="fdef" id="f-delay">
 <summary>Delay of Game</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <p class="plain"><strong>What it is:</strong> The play clock reaches :00 before the ball is snapped, or the offense/defense isn't ready to play after an intermission, score, or timeout. Also includes deliberately advancing a dead ball.</p>
 <details class="cite"><summary>NCAA Rule (3-4-2)</summary><div class="cite-body">
 <blockquote>"A foul for illegal delay occurs if the play clock is at :00 before the ball is put in play."</blockquote>
@@ -1426,6 +1466,7 @@ Penalty: 5 yards from the succeeding spot, dead-ball foul.
 
 <details class="fdef" id="f-illegalsub">
 <summary>Illegal Substitution</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <p class="plain"><strong>What it is:</strong> This name actually covers several distinct violations, not one foul:</p>
 <div class="exceptions"><h5>The different ways it happens</h5>
 <ul class="checklist">
@@ -1452,5 +1493,8 @@ Penalties vary by which violation occurred: entering/leaving illegally or not pl
   Built for personal officiating study/reference. Sourced from the TASO Football Officials Manual for a Crew of 4 (rev. June 2026), the 2026 NCAA Football Rules, and the 2026 UIL Exceptions to NCAA Football Rules. Not an official publication of TASO, the UIL, or the NCAA &ndash; always defer to the current official manuals and your chapter's guidance.
 </footer>
 
+<script>
+  function goBack(){ window.history.back(); }
+</script>
 </body>
 </html>
