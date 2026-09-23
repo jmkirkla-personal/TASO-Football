@@ -6,9 +6,9 @@
 <style>
   :root{
     --ink:#1a1a1a; --paper:#ffffff; --line:#d8d8d8;
-    --orange:#e8590c; --orange-dk:#b5450a; --panel:#f6f6f4;
+    --red:#ED1037; --red-dk:#B00D2A; --panel:#f6f6f4;
     --varsity:#1a1a1a; --jv:#8a5a00; --ms:#0a6e4a;
-    --blue:#1a5fb4; --blue-dk:#123f7a;
+    --blue:#00529C; --blue-dk:#184A87;
   }
   *{box-sizing:border-box;}
   body{
@@ -19,7 +19,7 @@
   }
   h1,h2,h3,h4{ font-family: Arial, Helvetica, sans-serif; }
   header.masthead{
-    border-bottom: 6px solid var(--orange);
+    border-bottom: 6px solid var(--red);
     padding: 18px 0 10px; margin-bottom: 6px;
   }
   header.masthead h1{ margin:0 0 4px; font-size: 1.7em; }
@@ -45,7 +45,7 @@
   #t-h:checked ~ .tabnav label[for=t-h],
   #t-l:checked ~ .tabnav label[for=t-l],
   #t-chain:checked ~ .tabnav label[for=t-chain]{
-    background: var(--orange); color:#fff; border-color:var(--orange-dk);
+    background: var(--red); color:#fff; border-color:var(--red-dk);
   }
   #t-overview:checked ~ .content .panel-overview,
   #t-r:checked ~ .content .panel-r,
@@ -70,17 +70,17 @@
     padding: 4px 12px; border-radius: 4px 4px 0 0; margin: 0; font-size:1.05em;
   }
   h4.who{ font-family: Arial, sans-serif; font-size:.95em; margin: 14px 0 4px;
-    color: var(--orange-dk); text-transform: uppercase; letter-spacing:.03em; border-bottom:1px solid var(--line); padding-bottom:2px;}
+    color: var(--red-dk); text-transform: uppercase; letter-spacing:.03em; border-bottom:1px solid var(--line); padding-bottom:2px;}
 
   ul.checklist{ list-style:none; margin: 6px 0 6px; padding-left: 4px; }
   ul.checklist li{ margin: 5px 0; padding-left: 1.6em; text-indent: -1.6em; }
-  ul.checklist li::before{ content:"\2610\0020"; color:var(--orange-dk); font-weight:bold; }
+  ul.checklist li::before{ content:"\2610\0020"; color:var(--red-dk); font-weight:bold; }
 
   a.foul{
-    color: var(--orange-dk); font-weight:bold; text-decoration: underline dotted;
+    color: var(--red-dk); font-weight:bold; text-decoration: underline dotted;
     text-underline-offset:3px;
   }
-  a.foul:hover{ color: var(--orange); }
+  a.foul:hover{ color: var(--red); }
   a.sig{
     color: var(--blue); font-weight:bold; text-decoration: underline dotted;
     text-underline-offset:3px;
@@ -92,7 +92,7 @@
   #glossary h2{ font-size:1.5em; }
   #glossary > p.blurb{ color:#555; font-size:.92em; max-width: 70ch;}
   details.fdef{
-    border:1px solid var(--line); border-left: 6px solid var(--orange); border-radius:6px;
+    border:1px solid var(--line); border-left: 6px solid var(--red); border-radius:6px;
     margin: 10px 0; padding: 10px 14px; background:#fffdfa;
   }
   details.fdef[open]{ background:#fff; }
@@ -101,7 +101,7 @@
     list-style: none; display:flex; align-items:center; gap:8px;
   }
   details.fdef > summary::-webkit-details-marker{ display:none; }
-  details.fdef > summary::before{ content:"\25B8"; color:var(--orange-dk); }
+  details.fdef > summary::before{ content:"\25B8"; color:var(--red-dk); }
   details.fdef[open] > summary::before{ content:"\25BE"; }
   details.fdef.sdef{ border-left-color: var(--blue); background:#fafcff; }
   details.fdef.sdef[open]{ background:#fff; }
@@ -157,20 +157,20 @@
   }
   .flowchart h5{ margin:0 0 6px; font-family:Arial,sans-serif; }
   .flowchart ul.checklist li{ margin:7px 0; }
-  .flowchart .result{ font-weight:bold; color:var(--orange-dk); }
+  .flowchart .result{ font-weight:bold; color:var(--red-dk); }
 
   .pocket{
     margin-top: 26px; border: 2px solid var(--ink); border-radius: 8px; padding: 14px 16px;
     background: #fffef8;
   }
-  .pocket > h3{ background:none; color:var(--ink); padding:0; display:block; border-bottom:2px solid var(--orange); }
+  .pocket > h3{ background:none; color:var(--ink); padding:0; display:block; border-bottom:2px solid var(--red); }
   .pocket-cols{ display:flex; gap:0; }
   .pocket-col{ flex:1 1 50%; padding: 0 14px; }
   .pocket-col:first-child{ border-right: 1px dashed #999; }
-  .pocket-col h4.qrg-h{ font-family:Arial,sans-serif; font-size:.95em; margin:0 0 6px; color:var(--orange-dk); border-bottom:1px solid var(--line); }
+  .pocket-col h4.qrg-h{ font-family:Arial,sans-serif; font-size:.95em; margin:0 0 6px; color:var(--red-dk); border-bottom:1px solid var(--line); }
   ul.mini-steps{ list-style:none; padding-left:0; margin:0 0 4px; font-size:.86em; }
   ul.mini-steps li{ margin:3px 0; padding-left:1.3em; text-indent:-1.3em; }
-  ul.mini-steps li::before{ content:"\2022\0020"; color:var(--orange-dk); font-weight:bold; }
+  ul.mini-steps li::before{ content:"\2022\0020"; color:var(--red-dk); font-weight:bold; }
   table.qrg.pocket-table th, table.qrg.pocket-table td{ padding:4px 6px; font-size:.82em; }
 
   .printbtn{
@@ -178,7 +178,7 @@
     background:var(--ink); color:#fff; border:none; border-radius:6px;
     padding:7px 14px; margin-top:12px; cursor:pointer;
   }
-  .printbtn:hover{ background:var(--orange-dk); }
+  .printbtn:hover{ background:var(--red-dk); }
   #printArea{ display:none; }
 
   @media print{
@@ -272,10 +272,10 @@
     <text x="836" y="74" font-size="13" font-family="Arial" fill="#555">9-yd mark</text>
     <text x="836" y="256" font-size="13" font-family="Arial" fill="#555">9-yd mark</text>
     <!-- restraining lines -->
-    <line x1="300" y1="40" x2="300" y2="280" stroke="var(--orange-dk)" stroke-width="3"/>
-    <line x1="440" y1="40" x2="440" y2="280" stroke="var(--orange-dk)" stroke-width="3"/>
-    <text x="240" y="30" font-size="13" font-family="Arial" fill="var(--orange-dk)">Kicking team's restraining line</text>
-    <text x="450" y="30" font-size="13" font-family="Arial" fill="var(--orange-dk)">Receiving team's restraining line (10 yds beyond)</text>
+    <line x1="300" y1="40" x2="300" y2="280" stroke="var(--red-dk)" stroke-width="3"/>
+    <line x1="440" y1="40" x2="440" y2="280" stroke="var(--red-dk)" stroke-width="3"/>
+    <text x="240" y="30" font-size="13" font-family="Arial" fill="var(--red-dk)">Kicking team's restraining line</text>
+    <text x="450" y="30" font-size="13" font-family="Arial" fill="var(--red-dk)">Receiving team's restraining line (10 yds beyond)</text>
     <!-- restricted areas (shaded, along sidelines near the kicking line) -->
     <rect x="260" y="18" width="120" height="22" fill="#b30000" opacity="0.25"/>
     <rect x="260" y="280" width="120" height="22" fill="#b30000" opacity="0.25"/>
