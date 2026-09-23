@@ -163,10 +163,15 @@
     margin-top: 26px; border: 2px solid var(--ink); border-radius: 8px; padding: 14px 16px;
     background: #fffef8;
   }
-  .pocket > h3{ background:none; color:var(--ink); padding:0; display:block; border-bottom:2px solid var(--red); }
-  .pocket-cols{ display:flex; gap:0; }
+  .pocket-cols{ display:flex; flex-wrap:wrap; gap:0; }
+  .pocket-cols > .cover-col{
+    flex: 0 0 100%; text-align:center; padding: 4px 0 12px; border-bottom:2px solid var(--red); margin-bottom:10px;
+  }
+  .cover-col h3{ margin:4px 0 2px; color:var(--ink); }
+  .cover-col .cover-abbr{ display:none; } /* only shown in print */
+  .cover-col .cover-tag{ margin:0; font-size:.8em; color:#777; font-family:Arial,sans-serif; }
   .pocket-col{ flex:1 1 50%; padding: 0 14px; }
-  .pocket-col:first-child{ border-right: 1px dashed #999; }
+  .pocket-cols > .pocket-col:nth-child(2){ border-right: 1px dashed #999; }
   .pocket-col h4.qrg-h{ font-family:Arial,sans-serif; font-size:.95em; margin:0 0 6px; color:var(--red-dk); border-bottom:1px solid var(--line); }
   ul.mini-steps{ list-style:none; padding-left:0; margin:0 0 4px; font-size:.86em; }
   ul.mini-steps li{ margin:3px 0; padding-left:1.3em; text-indent:-1.3em; }
@@ -179,12 +184,34 @@
     padding:7px 14px; margin-top:12px; cursor:pointer;
   }
   .printbtn:hover{ background:var(--red-dk); }
+  .print-note{ font-size:.78em; color:#777; margin:6px 0 0; max-width:420px; }
   #printArea{ display:none; }
 
   @media print{
-    .pocket{ break-before: page; border:none; padding:0; }
-    .pocket-cols{ page-break-inside: avoid; }
-    @page{ size: letter landscape; margin: 0.35in; }
+    @page{ size: letter landscape; margin: 0.5in 1in; }
+    .pocket{ break-before: page; border:none; padding:0; background:#fff; }
+    .pocket-cols{
+      flex-wrap: nowrap; page-break-inside: avoid; width: 9in; margin: 0 auto;
+    }
+    .pocket-cols > .cover-col, .pocket-col{
+      flex: 0 0 3in !important; width: 3in !important; min-height: 4.75in;
+      max-height: 4.75in; overflow: hidden; box-sizing: border-box;
+      padding: 0.2in 0.22in !important; border-right: 1px dashed #999 !important; border-bottom:none !important;
+      margin-bottom: 0 !important; text-align:left;
+    }
+    .pocket-cols > *:last-child{ border-right: none !important; }
+    .cover-col{ display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center !important; }
+    .cover-col .cover-abbr{
+      display:block; font-family:Arial,sans-serif; font-weight:bold; font-size:76pt;
+      color:var(--red); line-height:1;
+    }
+    .cover-col h3{ font-size:14pt; margin:10px 0 5px; }
+    .cover-col .cover-tag{ font-size:8.5pt; }
+    .pocket-col h4.qrg-h{ font-size:10.5pt; }
+    ul.mini-steps{ font-size:9.5pt; line-height:1.45; }
+    ul.mini-steps li{ margin:4px 0; }
+    table.qrg.pocket-table th, table.qrg.pocket-table td{ font-size:8.5pt; padding:3px 5px; }
+    .pocket-col p{ font-size:8pt; }
     body.printing-pocket > *:not(#printArea){ display:none !important; }
     body.printing-pocket #printArea{ display:block !important; }
   }
@@ -199,6 +226,7 @@
     details.phase:not([open]) > *{ display:block !important; }
     .backlink{ display:none; }
     .printbtn{ display:none; }
+    .print-note{ display:none; }
   }
 </style>
 </head>
@@ -334,8 +362,9 @@
     <tr><th>Foul</th><th>Yardage</th><th>Spot</th><th>Notes</th></tr>
     <tr><td><a class="foul" href="#f-falsestart">False Start</a></td><td><strong>5 yds</strong></td><td>Succeeding spot</td><td>Dead-ball foul</td></tr>
     <tr><td><a class="foul" href="#f-encroachment">Encroachment</a></td><td><strong>5 yds</strong></td><td>Succeeding spot</td><td>Dead-ball foul</td></tr>
+    <tr><td><a class="foul" href="#f-illegalmotion">Illegal Motion / Illegal Shift</a></td><td><strong>5 yds</strong></td><td>Previous spot</td><td>Live-ball foul (at the snap)</td></tr>
     <tr><td><a class="foul" href="#f-offside">Offside</a></td><td><strong>5 yds</strong></td><td>Previous (live) / succeeding (dead-ball)</td><td>Two variants &ndash; see glossary</td></tr>
-    <tr><td><a class="foul" href="#f-holding">Holding (Offense)</a></td><td><strong>10 yds</strong></td><td>Previous spot</td><td>Safety if behind own goal line</td></tr>
+    <tr><td><a class="foul" href="#f-holding">Holding / Illegal Use of Hands</a></td><td><strong>10 yds</strong></td><td>Previous spot</td><td>+ auto 1st down if by defense; safety if by offense behind own goal line</td></tr>
     <tr><td><a class="foul" href="#f-clipping">Clipping</a></td><td><strong>15 yds</strong></td><td>Spot of foul (prev. if behind neutral zone)</td><td>Check exceptions &ndash; see glossary</td></tr>
     <tr><td><a class="foul" href="#f-blockbelowwaist">Illegal Block Below the Waist</a></td><td><strong>15 yds</strong></td><td>Previous spot</td><td>Distinct from Clipping &ndash; see glossary</td></tr>
     <tr><td><a class="foul" href="#f-chopblock">Chop Block</a></td><td><strong>15 yds</strong></td><td>Previous spot</td><td>&nbsp;</td></tr>
@@ -345,7 +374,8 @@
     <tr><td><a class="foul" href="#f-opi">Offensive Pass Interference</a></td><td><strong>10 yds</strong></td><td>Previous spot</td><td>&nbsp;</td></tr>
     <tr><td><a class="foul" href="#f-dpi">Defensive Pass Interference</a></td><td><strong>Spot of foul</strong> (or 15 if &ge;15 yds)</td><td>Spot of foul / previous spot</td><td>See glossary for 2-yd-line exception</td></tr>
     <tr><td><a class="foul" href="#f-inelig">Ineligible Receiver Downfield</a></td><td><strong>5 yds</strong></td><td>Previous spot</td><td>&nbsp;</td></tr>
-    <tr><td><a class="foul" href="#f-illegaltouch">Illegal Touching</a></td><td><strong>5 yds + LOD</strong></td><td>Previous spot</td><td>&nbsp;</td></tr>
+    <tr><td><a class="foul" href="#f-illegaltouch">Illegal Touching (Forward Pass)</a></td><td><strong>5 yds + LOD</strong></td><td>Previous spot</td><td>&nbsp;</td></tr>
+    <tr><td><a class="foul" href="#f-illegaltouchkick">Illegal Touching (Kick)</a></td><td><strong>No yardage</strong></td><td>&mdash;</td><td>Gives receiving team the option to take the ball at the spot instead &ndash; not a yardage foul</td></tr>
     <tr><td><a class="foul" href="#f-horsecollar">Horse-Collar Tackle</a></td><td><strong>15 yds</strong></td><td>Previous spot</td><td>Safety foul &ndash; flag every level</td></tr>
     <tr><td><a class="foul" href="#f-targeting">Targeting</a></td><td><strong>15 yds</strong></td><td>Previous (succeeding if dead-ball)</td><td>Ejection. Safety foul, every level</td></tr>
     <tr><td><a class="foul" href="#f-unsports">Unsportsmanlike Conduct</a></td><td><strong>15 yds</strong></td><td>Previous (live) / succeeding (dead-ball)</td><td>&nbsp;</td></tr>
@@ -354,7 +384,7 @@
   </table>
 
   <div class="flowchart">
-    <h5>Roughing / Running Into the Kicker or Holder</h5>
+    <h5><a class="foul" href="#f-roughingpasser">Roughing / Running Into the Kicker or Holder</a></h5>
     <ul class="checklist">
       <li>Contact is a live-ball personal foul that endangers the kicker/holder? &rarr; <span class="result">Roughing. 15 yds, previous spot, automatic 1st down.</span></li>
       <li>Kicker/holder is only displaced, not endangered? &rarr; <span class="result">Running Into. 5 yds, previous spot. No auto 1st down.</span></li>
@@ -364,7 +394,7 @@
   </div>
 
   <div class="flowchart">
-    <h5>Kick-Catch Interference</h5>
+    <h5><a class="foul" href="#f-kickcatch">Kick-Catch Interference</a></h5>
     <ul class="checklist">
       <li>Foul happened <strong>between the goal lines</strong> (not a free-kick foul behind B's 25)? &rarr; <span class="result">Receiving team's ball, 1st down, 15 yds beyond the spot of the foul.</span></li>
       <li>Foul on a <strong>free kick, behind B's 25</strong>, against a player who gave a valid fair-catch signal? &rarr; <span class="result">Penalize from the B-25.</span></li>
@@ -407,7 +437,7 @@
   <li>Count Team B (the receiving team) &ndash; on free kicks, <strong>R</strong> and <strong>L</strong> count the receiving team while <strong>U</strong> and <strong>H</strong> count the kicking team.</li>
   <li>Deep kicks: responsible for the goal line/pylon on your sideline; watch for <a class="foul" href="#f-offside">Offside</a> and illegal wedge formations.</li>
   <li>Short/onside kicks: think onside first, then anticipate a return for a TD.</li>
-  <li>Watch for legal/illegal touching, fair-catch signals, and interference with the opportunity to catch.</li>
+  <li>Watch for legal/<a class="foul" href="#f-illegaltouchkick">illegal touching</a>, fair-catch signals, and <a class="foul" href="#f-kickcatch">interference with the opportunity to catch</a>.</li>
 </ul>
 </details>
 
@@ -415,7 +445,7 @@
 <ul class="checklist">
   <li>Position deep and wide on the QB's throwing-arm side, 12&ndash;14 yards deep and wide.</li>
   <li>Check the offensive formation, count Team A, signal the count to <strong>U</strong> &ndash; closed fist for 11, open palm for fewer.</li>
-  <li>Watch setbacks and the QB for illegal motion; assist <strong>U</strong> on restricted-lineman movement.</li>
+  <li>Watch setbacks and the QB for <a class="foul" href="#f-illegalmotion">illegal motion</a>; assist <strong>U</strong> on restricted-lineman movement.</li>
 </ul>
 </details>
 
@@ -497,22 +527,26 @@
 <ul class="checklist">
   <li>Leave the field together with the crew &ndash; neither seek nor avoid coaches.</li>
   <li>Complete foul reports; obtain incident-report input from the crew if needed.</li>
-  <li>Any ejection, fight, targeting foul, or 15-yard sideline penalty requires an incident report within 24 hours.</li>
+  <li>Any ejection, fight, <a class="foul" href="#f-targeting">targeting</a> foul, or 15-yard sideline penalty requires an incident report within 24 hours.</li>
 </ul>
 </details>
 
 <div class="pocket">
-<h3>Pocket Card &ndash; Referee (R)</h3>
 <div class="pocket-cols">
+  <div class="pocket-col cover-col">
+    <div class="cover-abbr">R</div>
+    <h3>Pocket Card &ndash; Referee</h3>
+    <p class="cover-tag">TASO Crew of 4 &middot; Fold to 3&Prime;&times;4.75&Prime;</p>
+  </div>
   <div class="pocket-col">
     <h4 class="qrg-h">Procedure, Phase by Phase</h4>
     <ul class="mini-steps">
       <li><strong>Pregame</strong> &ndash; arrive w/ crew &middot; inspect field w/ L &middot; meet coaches (4 min prior)</li>
       <li><strong>Coin Toss</strong> &ndash; escort captains &middot; present options &middot; signal press box</li>
-      <li><strong>Kickoff</strong> &ndash; goal line, opposite press box &middot; ready signals &middot; watch offside/wedge</li>
+      <li><strong>Kickoff</strong> &ndash; goal line, opposite press box &middot; ready signals &middot; watch <a class="foul" href="#f-offside">offside</a>/wedge</li>
       <li><strong>Pre-Snap</strong> &ndash; deep/wide, QB's arm side &middot; count Team A</li>
       <li><strong>Run</strong> &ndash; help tackle at snap &middot; stay w/ ball to neutral zone &middot; clean up late hits</li>
-      <li><strong>Pass</strong> &ndash; back out 45&deg; &middot; protect passer &middot; rule grounding/legality</li>
+      <li><strong>Pass</strong> &ndash; back out 45&deg; &middot; protect passer &middot; rule <a class="foul" href="#f-grounding">grounding</a>/legality</li>
       <li><strong>Punt</strong> &ndash; behind/L of kicker &middot; watch kicker contact &middot; direct OOB spot</li>
       <li><strong>Try/FG</strong> &ndash; position per snap distance &middot; rule uprights &middot; confirm before signaling</li>
       <li><strong>Timeouts</strong> &ndash; only R stops clock for coach conference &middot; Varsity 2-min at 2:00</li>
@@ -523,6 +557,7 @@
     <h4 class="qrg-h">Most Common Calls</h4>
     <table class="qrg pocket-table">
       <tr><th>Foul</th><th>Yardage</th><th>Spot</th></tr>
+      <tr><td>Illegal Motion / Shift</td><td><strong>5 yds</strong></td><td>Previous spot</td></tr>
       <tr><td>Roughing the Passer</td><td><strong>15 yds</strong></td><td>End of last run / prev. spot</td></tr>
       <tr><td>Intentional Grounding</td><td><strong>5 yds + LOD</strong></td><td>Spot of foul</td></tr>
       <tr><td>Illegal Forward Pass</td><td><strong>5 yds</strong></td><td>Spot of foul</td></tr>
@@ -532,7 +567,8 @@
     </table>
   </div>
 </div>
-<button class="printbtn" onclick="printPocket(this)" type="button">&#128438; Print This Pocket Card</button>
+<button class="printbtn" onclick="printPocket(this)" type="button" title="Print settings: Landscape, 100% scale, no margin scaling">&#128438; Print This Pocket Card</button>
+<p class="print-note">For the exact 3&Prime;&times;4.75&Prime; fold: in the print dialog set <strong>Landscape</strong>, <strong>100% scale</strong> (not &quot;Fit to page&quot;), and margins to <strong>None</strong> or <strong>Default</strong>.</p>
 </div>
 </div>
 
@@ -583,7 +619,7 @@
 <details class="phase"><summary><h3>Running Plays</h3></summary>
 <ul class="checklist">
   <li>Key the snapper and two guards; help with tackles if an obvious foul is visible.</li>
-  <li>Check for <a class="foul" href="#f-holding">Holding</a> and illegal use of hands by both sides.</li>
+  <li>Check for <a class="foul" href="#f-holding">Holding / Illegal Use of Hands</a> by both sides.</li>
   <li>Cover the point of attack first, then behind the ball, then around the runner.</li>
 </ul>
 </details>
@@ -643,16 +679,20 @@
 </details>
 
 <div class="pocket">
-<h3>Pocket Card &ndash; Umpire (U)</h3>
 <div class="pocket-cols">
+  <div class="pocket-col cover-col">
+    <div class="cover-abbr">U</div>
+    <h3>Pocket Card &ndash; Umpire</h3>
+    <p class="cover-tag">TASO Crew of 4 &middot; Fold to 3&Prime;&times;4.75&Prime;</p>
+  </div>
   <div class="pocket-col">
     <h4 class="qrg-h">Procedure, Phase by Phase</h4>
     <ul class="mini-steps">
       <li><strong>Pregame</strong> &ndash; spot-check equipment w/ trainers</li>
       <li><strong>Coin Toss</strong> &ndash; introduce captain to R &middot; witness toss</li>
-      <li><strong>Kickoff</strong> &ndash; center field &rarr; kicking line, press-box side &middot; count A &middot; watch offside</li>
+      <li><strong>Kickoff</strong> &ndash; center field &rarr; kicking line, press-box side &middot; count A &middot; watch <a class="foul" href="#f-offside">offside</a></li>
       <li><strong>Pre-Snap</strong> &ndash; 5&ndash;10 yds deep, opposite R &middot; know the 5 ineligibles</li>
-      <li><strong>Run</strong> &ndash; key snapper/guards &middot; check holding/hands &middot; cover point of attack</li>
+      <li><strong>Run</strong> &ndash; key snapper/guards &middot; check <a class="foul" href="#f-holding">holding</a>/hands &middot; cover point of attack</li>
       <li><strong>Pass</strong> &ndash; watch ineligibles downfield &middot; move to neutral zone</li>
       <li><strong>Punt</strong> &ndash; 8&ndash;10 yds deep, favor L side &middot; watch line/snapper action</li>
       <li><strong>Try/FG</strong> &ndash; ~5 yds deep, favor L &middot; solely rules crossbar on short snaps</li>
@@ -672,7 +712,8 @@
     </table>
   </div>
 </div>
-<button class="printbtn" onclick="printPocket(this)" type="button">&#128438; Print This Pocket Card</button>
+<button class="printbtn" onclick="printPocket(this)" type="button" title="Print settings: Landscape, 100% scale, no margin scaling">&#128438; Print This Pocket Card</button>
+<p class="print-note">For the exact 3&Prime;&times;4.75&Prime; fold: in the print dialog set <strong>Landscape</strong>, <strong>100% scale</strong> (not &quot;Fit to page&quot;), and margins to <strong>None</strong> or <strong>Default</strong>.</p>
 </div>
 </div>
 
@@ -789,18 +830,22 @@
 </details>
 
 <div class="pocket">
-<h3>Pocket Card &ndash; Head Linesman (H)</h3>
 <div class="pocket-cols">
+  <div class="pocket-col cover-col">
+    <div class="cover-abbr">H</div>
+    <h3>Pocket Card &ndash; Head Linesman</h3>
+    <p class="cover-tag">TASO Crew of 4 &middot; Fold to 3&Prime;&times;4.75&Prime;</p>
+  </div>
   <div class="pocket-col">
     <h4 class="qrg-h">Procedure, Phase by Phase</h4>
     <ul class="mini-steps">
       <li><strong>Pregame</strong> &ndash; organize chain crew &middot; check chain/tape midpoint</li>
       <li><strong>Coin Toss</strong> &ndash; hold 9-yd marks on your side &middot; hold game ball</li>
-      <li><strong>Kickoff</strong> &ndash; kicking-team restraining line, opposite press box &middot; watch offside</li>
-      <li><strong>Pre-Snap</strong> &ndash; straddle neutral zone &middot; watch false start/encroachment/offside</li>
+      <li><strong>Kickoff</strong> &ndash; kicking-team restraining line, opposite press box &middot; watch <a class="foul" href="#f-offside">offside</a></li>
+      <li><strong>Pre-Snap</strong> &ndash; straddle neutral zone &middot; watch <a class="foul" href="#f-falsestart">false start</a>/<a class="foul" href="#f-encroachment">encroachment</a>/<a class="foul" href="#f-offside">offside</a></li>
       <li><strong>Run</strong> &ndash; watch blocking on your side &middot; mark forward progress</li>
       <li><strong>Pass</strong> &ndash; rule catch vs. neutral zone &middot; watch interference/ineligible downfield</li>
-      <li><strong>Punt</strong> &ndash; own the neutral zone &middot; watch gunners &middot; rule kick-catch interference</li>
+      <li><strong>Punt</strong> &ndash; own the neutral zone &middot; watch gunners &middot; rule <a class="foul" href="#f-kickcatch">kick-catch interference</a></li>
       <li><strong>Try/FG</strong> &ndash; sideline position &middot; solely rules kicker/holder contact (inside B-15)</li>
       <li><strong>Goal Line</strong> &ndash; sprint to goal line on snap inside B-5 &middot; confirm before signaling TD</li>
       <li><strong>Close of Period</strong> &ndash; reverse chain crew to opposite end (1st/3rd)</li>
@@ -820,7 +865,8 @@
     <p style="font-size:.78em;margin-top:6px;">Full Kick-Catch Interference &amp; Roughing/Running Into Kicker flowcharts: Overview tab.</p>
   </div>
 </div>
-<button class="printbtn" onclick="printPocket(this)" type="button">&#128438; Print This Pocket Card</button>
+<button class="printbtn" onclick="printPocket(this)" type="button" title="Print settings: Landscape, 100% scale, no margin scaling">&#128438; Print This Pocket Card</button>
+<p class="print-note">For the exact 3&Prime;&times;4.75&Prime; fold: in the print dialog set <strong>Landscape</strong>, <strong>100% scale</strong> (not &quot;Fit to page&quot;), and margins to <strong>None</strong> or <strong>Default</strong>.</p>
 </div>
 </div>
 
@@ -921,15 +967,19 @@
 </details>
 
 <div class="pocket">
-<h3>Pocket Card &ndash; Line Judge (L)</h3>
 <div class="pocket-cols">
+  <div class="pocket-col cover-col">
+    <div class="cover-abbr">L</div>
+    <h3>Pocket Card &ndash; Line Judge</h3>
+    <p class="cover-tag">TASO Crew of 4 &middot; Fold to 3&Prime;&times;4.75&Prime;</p>
+  </div>
   <div class="pocket-col">
     <h4 class="qrg-h">Procedure, Phase by Phase</h4>
     <ul class="mini-steps">
       <li><strong>Pregame</strong> &ndash; brief auxiliary box operator &middot; confirm balls/Ball Assistants</li>
       <li><strong>Coin Toss</strong> &ndash; hold 9-yd marks on your side &middot; hold game ball</li>
-      <li><strong>Kickoff</strong> &ndash; goal line, press-box side &middot; count B &middot; watch holding/clipping in return</li>
-      <li><strong>Pre-Snap</strong> &ndash; straddle neutral zone &middot; watch false start/encroachment/offside</li>
+      <li><strong>Kickoff</strong> &ndash; goal line, press-box side &middot; count B &middot; watch <a class="foul" href="#f-holding">holding</a>/<a class="foul" href="#f-clipping">clipping</a> in return</li>
+      <li><strong>Pre-Snap</strong> &ndash; straddle neutral zone &middot; watch <a class="foul" href="#f-falsestart">false start</a>/<a class="foul" href="#f-encroachment">encroachment</a>/<a class="foul" href="#f-offside">offside</a></li>
       <li><strong>Run</strong> &ndash; mirror H &middot; watch blocking on your side &middot; mark forward progress</li>
       <li><strong>Pass</strong> &ndash; rule catch vs. neutral zone &middot; watch interference/ineligible downfield</li>
       <li><strong>Punt</strong> &ndash; outside/front of deep receiver &middot; bean bag marks end of kick &middot; rule fair catch</li>
@@ -951,7 +1001,8 @@
     <p style="font-size:.78em;margin-top:6px;">Full Kick-Catch Interference flowchart: Overview tab.</p>
   </div>
 </div>
-<button class="printbtn" onclick="printPocket(this)" type="button">&#128438; Print This Pocket Card</button>
+<button class="printbtn" onclick="printPocket(this)" type="button" title="Print settings: Landscape, 100% scale, no margin scaling">&#128438; Print This Pocket Card</button>
+<p class="print-note">For the exact 3&Prime;&times;4.75&Prime; fold: in the print dialog set <strong>Landscape</strong>, <strong>100% scale</strong> (not &quot;Fit to page&quot;), and margins to <strong>None</strong> or <strong>Default</strong>.</p>
 </div>
 </div>
 
@@ -993,7 +1044,7 @@
   <li>Set to 12:00 at the start of every period.</li>
   <li>Start on legal touching of a free kick, or on the Referee's start-the-clock signal, or on the snap if no signal is given.</li>
   <li>Stop on: any charged timeout, after any score, ball out of bounds, a first down awarded, an incomplete pass, and the Two-Minute Timeout (Varsity only).</li>
-  <li>Keep a written log of every stoppage &ndash; if time erroneously runs off during a false start, correct it immediately without waiting for direction.</li>
+  <li>Keep a written log of every stoppage &ndash; if time erroneously runs off during a <a class="foul" href="#f-falsestart">false start</a>, correct it immediately without waiting for direction.</li>
 </ul>
 </details>
 
@@ -1013,8 +1064,12 @@
 </details>
 
 <div class="pocket">
-<h3>Pocket Card &ndash; Chain Crew / Clock Operator</h3>
 <div class="pocket-cols">
+  <div class="pocket-col cover-col">
+    <div class="cover-abbr">CC</div>
+    <h3>Pocket Card &ndash; Chain Crew / Clock Op</h3>
+    <p class="cover-tag">TASO Crew of 4 &middot; Fold to 3&Prime;&times;4.75&Prime;</p>
+  </div>
   <div class="pocket-col">
     <h4 class="qrg-h">Chain Crew Fundamentals</h4>
     <ul class="mini-steps">
@@ -1039,7 +1094,8 @@
     </ul>
   </div>
 </div>
-<button class="printbtn" onclick="printPocket(this)" type="button">&#128438; Print This Pocket Card</button>
+<button class="printbtn" onclick="printPocket(this)" type="button" title="Print settings: Landscape, 100% scale, no margin scaling">&#128438; Print This Pocket Card</button>
+<p class="print-note">For the exact 3&Prime;&times;4.75&Prime; fold: in the print dialog set <strong>Landscape</strong>, <strong>100% scale</strong> (not &quot;Fit to page&quot;), and margins to <strong>None</strong> or <strong>Default</strong>.</p>
 </div>
 </div>
 
@@ -1204,13 +1260,23 @@ Penalty (live-ball, at the snap): 5 yards from the <strong>previous spot</strong
 </details>
 
 <details class="fdef" id="f-holding">
-<summary>Holding (Offense)</summary>
+<summary>Holding / Illegal Use of Hands</summary>
 <button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
 <span class="safety-flag">Judgment foul &ndash; not purely procedural</span>
-<p class="plain"><strong>What it is:</strong> Using the hands or arms to grasp, pull, hook, clamp, or encircle an opponent in a way that illegally impedes them. Legal use of hands requires the hands in advance of the elbow, inside the frame of the opponent's body, at or below the shoulders.</p>
-<details class="cite"><summary>NCAA Rule (9-3-3)</summary><div class="cite-body">
+<p class="plain"><strong>What it is:</strong> Using the hands or arms to grasp, pull, hook, clamp, or encircle an opponent in a way that illegally impedes them. Legal use of hands requires the hands in advance of the elbow, inside the frame of the opponent's body, at or below the shoulders. "Holding" and "Illegal Use of Hands" are the same signal and the same underlying concept [S42] &ndash; the rulebook just splits it into a separate article for each side of the ball, with different penalties.</p>
+<div class="exceptions"><h5>Offense vs. Defense &ndash; two different penalties</h5>
+<ul class="checklist">
+  <li><strong>Offense (Rule 9-3-3):</strong> 10 yards, previous spot. A foul behind Team A's own goal line is a safety.</li>
+  <li><strong>Defense (Rule 9-3-4):</strong> 10 yards, <strong>plus automatic first down</strong> if not in conflict with other rules.</li>
+  <li>Defenders may legally use hands/arms to push, pull, ward off, or lift an offensive player who is obviously blocking them, or in an attempt to reach the runner or a loose ball &ndash; that's not a foul.</li>
+</ul>
+</div>
+<details class="cite"><summary>NCAA Rule (9-3-3, Offense)</summary><div class="cite-body">
 <blockquote>"The hand(s) and arm(s) shall not be used to grasp, pull, hook, clamp or encircle in any way that illegally impedes or illegally obstructs an opponent."</blockquote>
-Penalty: 10 yards from the previous spot; Team A fouls behind their own goal line are a safety.
+</div></details>
+<details class="cite"><summary>NCAA Rule (9-3-4, Defense)</summary><div class="cite-body">
+<blockquote>"Defensive players may not use hands and arms to tackle, hold or otherwise illegally obstruct an opponent other than a runner."</blockquote>
+Penalty: 10 yards plus automatic first down if not in conflict with other rules.
 </div></details>
 <details class="cite"><summary>UIL Exception</summary><div class="cite-body">None on this foul.</div></details>
 <div class="level-row"><span class="level-tag varsity">Varsity</span> No tolerance given. Flag it every time. <span class="infer">(inferred)</span></div>
@@ -1392,9 +1458,9 @@ Exception: doesn't apply if the passer is legally throwing the ball away and it 
 </details>
 
 <details class="fdef" id="f-illegaltouch">
-<summary>Illegal Touching</summary>
+<summary>Illegal Touching (Forward Pass)</summary>
 <button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
-<p class="plain"><strong>What it is:</strong> An originally ineligible player, while inbounds, intentionally touches a legal forward pass before it's touched by an opponent or an official.</p>
+<p class="plain"><strong>What it is:</strong> An originally ineligible player, while inbounds, intentionally touches a legal forward pass before it's touched by an opponent or an official. <em>Not the same foul as <a class="foul" href="#f-illegaltouchkick">Illegal Touching (Kick)</a></em> &ndash; same name, completely different rule.</p>
 <details class="cite"><summary>NCAA Rule (7-3-11)</summary><div class="cite-body">
 <blockquote>"No originally ineligible player while inbounds may intentionally touch a legal forward pass until it has touched an opponent or an official."</blockquote>
 Penalty: 5 yards from the previous spot, loss of down.
@@ -1403,6 +1469,41 @@ Penalty: 5 yards from the previous spot, loss of down.
 <div class="level-row"><span class="level-tag varsity">Varsity</span> No tolerance given. Flag it every time. <span class="infer">(inferred.)</span></div>
 <div class="level-row"><span class="level-tag jv">JV</span> If small, give a warning. <span class="infer">(inferred.)</span></div>
 <div class="level-row"><span class="level-tag ms">MS</span> If egregious, flag it; otherwise coach it. <span class="infer">(inferred.)</span></div>
+</details>
+
+<details class="fdef" id="f-illegaltouchkick">
+<summary>Illegal Touching (Kick)</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
+<p class="plain"><strong>What it is:</strong> An inbounds player of the <em>kicking</em> team touches a scrimmage kick that has already crossed the neutral zone, before an opponent touches it. <em>Not the same foul as <a class="foul" href="#f-illegaltouch">Illegal Touching (Forward Pass)</a></em> &ndash; same name, completely different rule, and this one isn't really a "foul" in the yardage-penalty sense at all.</p>
+<div class="exceptions"><h5>How it's actually enforced</h5>
+<ul class="checklist">
+  <li>No yardage penalty and no down is lost by itself &ndash; when the ball becomes dead, it just gives the <strong>receiving team the option</strong> to take the ball at the spot of the violation instead of wherever it ended up.</li>
+  <li>That option disappears if there's an accepted penalty for a live-ball foul by either team, or if there are offsetting fouls.</li>
+  <li>Ignored entirely on a try, in extra periods, or in Team A's own end zone.</li>
+</ul>
+</div>
+<details class="cite"><summary>NCAA Rule (6-3-2)</summary><div class="cite-body">
+<blockquote>"No inbounds player of the kicking team shall touch a scrimmage kick that has crossed the neutral zone before it touches an opponent. This is illegal touching, a violation that, when the ball becomes dead, gives the receiving team the privilege of taking the ball at the spot of the violation."</blockquote>
+</div></details>
+<details class="cite"><summary>UIL Exception</summary><div class="cite-body">None on this foul.</div></details>
+<div class="level-row"><span class="level-tag varsity">Varsity</span> No tolerance given. Flag it every time. <span class="infer">(inferred.)</span></div>
+<div class="level-row"><span class="level-tag jv">JV</span> No tolerance given. Flag it every time. <span class="infer">(inferred &ndash; this is a ball-placement rule, not a judgment call, so it likely doesn't graduate by level at all; confirm.)</span></div>
+<div class="level-row"><span class="level-tag ms">MS</span> No tolerance given. Flag it every time. <span class="infer">(inferred &ndash; confirm.)</span></div>
+</details>
+
+<details class="fdef" id="f-illegalmotion">
+<summary>Illegal Motion / Illegal Shift</summary>
+<button class="backlink" onclick="goBack()" type="button">&larr; Back to where you were</button>
+<p class="plain"><strong>What it is:</strong> Two related pre-snap violations by the offense, each with its own hand signal but the same penalty. <strong>Illegal Motion:</strong> more than one back in motion at once, a back moving toward the opponent's goal line, a lineman going in motion, or motion starting before the one-second rule is satisfied. <strong>Illegal Shift:</strong> after a huddle or shift, Team A fails to come to a complete, simultaneous stop for a full second before the snap.</p>
+<p class="plain">This is a <strong>live-ball foul at the snap</strong> &ndash; different from <a class="foul" href="#f-falsestart">False Start</a> and <a class="foul" href="#f-encroachment">Encroachment</a>, which are dead-ball fouls before the snap.</p>
+<details class="cite"><summary>NCAA Rule (7-1-4-b, c)</summary><div class="cite-body">
+<blockquote>"One back may be in motion, but that back may not be moving toward their opponent's goal line... At the snap, Team A may not execute an illegal shift."</blockquote>
+Penalty: 5 yards from the previous spot [S19 for motion, S20 for shift].
+</div></details>
+<details class="cite"><summary>UIL Exception</summary><div class="cite-body">None on this foul.</div></details>
+<div class="level-row"><span class="level-tag varsity">Varsity</span> No tolerance given. Flag it every time. <span class="infer">(inferred.)</span></div>
+<div class="level-row"><span class="level-tag jv">JV</span> If small, give a warning to the player/coach. <span class="infer">(inferred.)</span></div>
+<div class="level-row"><span class="level-tag ms">MS</span> If egregious, flag it. If not, give the coach a chance to fix it. <span class="infer">(inferred.)</span></div>
 </details>
 
 <details class="fdef" id="f-kickcatch">
@@ -1512,6 +1613,8 @@ Penalties vary by which violation occurred: entering/leaving illegally or not pl
 
 <footer class="note">
   Built for personal officiating study/reference. Sourced from the TASO Football Officials Manual for a Crew of 4 (rev. June 2026), the 2026 NCAA Football Rules, and the 2026 UIL Exceptions to NCAA Football Rules. Not an official publication of TASO, the UIL, or the NCAA &ndash; always defer to the current official manuals and your chapter's guidance.
+  <br><br>
+  <strong>Printing pocket cards:</strong> each "Print This Pocket Card" button is sized so two folds collapse the sheet down to exactly 3&Prime;&times;4.75&Prime;. For that to come out exact, set the print dialog to <strong>Letter paper, Landscape orientation, 100% scale</strong> (turn off "Fit to page"/"Shrink to fit"), and <strong>margins to None or Default</strong>. If your browser or printer forces a different scale, the card will still fold correctly &ndash; it'll just come out proportionally smaller or larger than 3&Prime;&times;4.75&Prime;.
 </footer>
 
 <div id="printArea"></div>
