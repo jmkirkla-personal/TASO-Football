@@ -173,10 +173,20 @@
   ul.mini-steps li::before{ content:"\2022\0020"; color:var(--orange-dk); font-weight:bold; }
   table.qrg.pocket-table th, table.qrg.pocket-table td{ padding:4px 6px; font-size:.82em; }
 
+  .printbtn{
+    font-family: Arial, sans-serif; font-size:.82em; font-weight:bold;
+    background:var(--ink); color:#fff; border:none; border-radius:6px;
+    padding:7px 14px; margin-top:12px; cursor:pointer;
+  }
+  .printbtn:hover{ background:var(--orange-dk); }
+  #printArea{ display:none; }
+
   @media print{
     .pocket{ break-before: page; border:none; padding:0; }
     .pocket-cols{ page-break-inside: avoid; }
     @page{ size: letter landscape; margin: 0.35in; }
+    body.printing-pocket > *:not(#printArea){ display:none !important; }
+    body.printing-pocket #printArea{ display:block !important; }
   }
 
   footer.note{ margin-top:40px; font-size:.8em; color:#777; border-top:1px solid var(--line); padding-top:10px; }
@@ -188,6 +198,7 @@
     details.fdef, details.cite{ break-inside: avoid; }
     details.phase:not([open]) > *{ display:block !important; }
     .backlink{ display:none; }
+    .printbtn{ display:none; }
   }
 </style>
 </head>
@@ -319,27 +330,28 @@
 
   <h2>Master Foul &amp; Enforcement Reference</h2>
   <p style="font-size:.9em;color:#555;">Standard, fixed-enforcement fouls. For fouls with branching outcomes, see the flowcharts below.</p>
-  <ul class="checklist">
-    <li><a class="foul" href="#f-falsestart">False Start</a> &ndash; <strong>5 yds, succeeding spot.</strong> Dead-ball foul.</li>
-    <li><a class="foul" href="#f-encroachment">Encroachment</a> &ndash; <strong>5 yds, succeeding spot.</strong> Dead-ball foul.</li>
-    <li><a class="foul" href="#f-offside">Offside</a> &ndash; <strong>5 yds.</strong> <strong>Previous spot</strong> if live-ball (at the snap) / <strong>succeeding spot</strong> if dead-ball (before the snap). Two variants &ndash; see glossary.</li>
-    <li><a class="foul" href="#f-holding">Holding (Offense)</a> &ndash; <strong>10 yds, previous spot</strong> (safety if behind own goal line).</li>
-    <li><a class="foul" href="#f-clipping">Clipping</a> &ndash; <strong>15 yds.</strong> Spot of the foul (previous spot if behind neutral zone). Check exceptions first &ndash; see glossary.</li>
-    <li><a class="foul" href="#f-blockbelowwaist">Illegal Block Below the Waist</a> &ndash; <strong>15 yds, previous spot.</strong> Distinct from Clipping &ndash; see glossary.</li>
-    <li><a class="foul" href="#f-chopblock">Chop Block</a> &ndash; <strong>15 yds, previous spot.</strong></li>
-    <li><a class="foul" href="#f-roughingpasser">Roughing the Passer</a> &ndash; <strong>15 yds.</strong> End of the last run beyond neutral zone (or previous spot if no gain). Safety foul &ndash; flag every level.</li>
-    <li><a class="foul" href="#f-grounding">Intentional Grounding</a> &ndash; <strong>5 yds + loss of down, spot of the foul.</strong> <span class="infer">Pending rules-expert verification &ndash; see glossary.</span></li>
-    <li><a class="foul" href="#f-illegalpass">Illegal Forward Pass</a> &ndash; <strong>5 yds, spot of the foul</strong> (+ loss of down if by Team A before change of possession).</li>
-    <li><a class="foul" href="#f-opi">Offensive Pass Interference</a> &ndash; <strong>10 yds, previous spot.</strong></li>
-    <li><a class="foul" href="#f-dpi">Defensive Pass Interference</a> &ndash; <strong>spot of foul</strong> (or <strong>15 yds</strong> if &ge;15 yds downfield). See glossary for the 2-yard-line exception.</li>
-    <li><a class="foul" href="#f-inelig">Ineligible Receiver Downfield</a> &ndash; <strong>5 yds, previous spot.</strong></li>
-    <li><a class="foul" href="#f-illegaltouch">Illegal Touching</a> &ndash; <strong>5 yds + loss of down, previous spot.</strong></li>
-    <li><a class="foul" href="#f-horsecollar">Horse-Collar Tackle</a> &ndash; <strong>15 yds, previous spot.</strong> Safety foul &ndash; flag every level.</li>
-    <li><a class="foul" href="#f-targeting">Targeting</a> &ndash; <strong>15 yds,</strong> previous spot (succeeding spot if dead-ball). Ejection. Safety foul &ndash; flag every level, every time.</li>
-    <li><a class="foul" href="#f-unsports">Unsportsmanlike Conduct</a> &ndash; <strong>15 yds.</strong> Previous spot if live-ball, succeeding spot if dead-ball.</li>
-    <li><a class="foul" href="#f-illegalsub">Illegal Substitution</a> &ndash; <strong>5 yds.</strong> Previous or succeeding spot depending on which violation &ndash; see glossary.</li>
-    <li><a class="foul" href="#f-delay">Delay of Game</a> &ndash; <strong>5 yds, succeeding spot.</strong> Dead-ball foul.</li>
-  </ul>
+  <table class="qrg">
+    <tr><th>Foul</th><th>Yardage</th><th>Spot</th><th>Notes</th></tr>
+    <tr><td><a class="foul" href="#f-falsestart">False Start</a></td><td><strong>5 yds</strong></td><td>Succeeding spot</td><td>Dead-ball foul</td></tr>
+    <tr><td><a class="foul" href="#f-encroachment">Encroachment</a></td><td><strong>5 yds</strong></td><td>Succeeding spot</td><td>Dead-ball foul</td></tr>
+    <tr><td><a class="foul" href="#f-offside">Offside</a></td><td><strong>5 yds</strong></td><td>Previous (live) / succeeding (dead-ball)</td><td>Two variants &ndash; see glossary</td></tr>
+    <tr><td><a class="foul" href="#f-holding">Holding (Offense)</a></td><td><strong>10 yds</strong></td><td>Previous spot</td><td>Safety if behind own goal line</td></tr>
+    <tr><td><a class="foul" href="#f-clipping">Clipping</a></td><td><strong>15 yds</strong></td><td>Spot of foul (prev. if behind neutral zone)</td><td>Check exceptions &ndash; see glossary</td></tr>
+    <tr><td><a class="foul" href="#f-blockbelowwaist">Illegal Block Below the Waist</a></td><td><strong>15 yds</strong></td><td>Previous spot</td><td>Distinct from Clipping &ndash; see glossary</td></tr>
+    <tr><td><a class="foul" href="#f-chopblock">Chop Block</a></td><td><strong>15 yds</strong></td><td>Previous spot</td><td>&nbsp;</td></tr>
+    <tr><td><a class="foul" href="#f-roughingpasser">Roughing the Passer</a></td><td><strong>15 yds</strong></td><td>End of last run beyond neutral zone</td><td>Safety foul &ndash; flag every level</td></tr>
+    <tr><td><a class="foul" href="#f-grounding">Intentional Grounding</a></td><td><strong>5 yds + LOD</strong></td><td>Spot of foul</td><td class="infer">Pending rules-expert verification</td></tr>
+    <tr><td><a class="foul" href="#f-illegalpass">Illegal Forward Pass</a></td><td><strong>5 yds</strong></td><td>Spot of foul</td><td>+ LOD if by Team A pre-possession-change</td></tr>
+    <tr><td><a class="foul" href="#f-opi">Offensive Pass Interference</a></td><td><strong>10 yds</strong></td><td>Previous spot</td><td>&nbsp;</td></tr>
+    <tr><td><a class="foul" href="#f-dpi">Defensive Pass Interference</a></td><td><strong>Spot of foul</strong> (or 15 if &ge;15 yds)</td><td>Spot of foul / previous spot</td><td>See glossary for 2-yd-line exception</td></tr>
+    <tr><td><a class="foul" href="#f-inelig">Ineligible Receiver Downfield</a></td><td><strong>5 yds</strong></td><td>Previous spot</td><td>&nbsp;</td></tr>
+    <tr><td><a class="foul" href="#f-illegaltouch">Illegal Touching</a></td><td><strong>5 yds + LOD</strong></td><td>Previous spot</td><td>&nbsp;</td></tr>
+    <tr><td><a class="foul" href="#f-horsecollar">Horse-Collar Tackle</a></td><td><strong>15 yds</strong></td><td>Previous spot</td><td>Safety foul &ndash; flag every level</td></tr>
+    <tr><td><a class="foul" href="#f-targeting">Targeting</a></td><td><strong>15 yds</strong></td><td>Previous (succeeding if dead-ball)</td><td>Ejection. Safety foul, every level</td></tr>
+    <tr><td><a class="foul" href="#f-unsports">Unsportsmanlike Conduct</a></td><td><strong>15 yds</strong></td><td>Previous (live) / succeeding (dead-ball)</td><td>&nbsp;</td></tr>
+    <tr><td><a class="foul" href="#f-illegalsub">Illegal Substitution</a></td><td><strong>5 yds</strong></td><td>Previous or succeeding, by violation</td><td>See glossary</td></tr>
+    <tr><td><a class="foul" href="#f-delay">Delay of Game</a></td><td><strong>5 yds</strong></td><td>Succeeding spot</td><td>Dead-ball foul</td></tr>
+  </table>
 
   <div class="flowchart">
     <h5>Roughing / Running Into the Kicker or Holder</h5>
@@ -369,7 +381,7 @@
 <div class="panel panel-r">
 <h2>Referee (<strong>R</strong>)</h2>
 
-<details class="phase" open><summary><h3>Pregame</h3></summary>
+<details class="phase"><summary><h3>Pregame</h3></summary>
 <ul class="checklist">
   <li>Arrive on the field with the crew, no later than 15 minutes before kickoff.</li>
   <li>Inspect the entire field with <strong>L</strong> &ndash; unusual markings, hazards, irregularities.</li>
@@ -378,7 +390,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Coin Toss</h3></summary>
+<details class="phase"><summary><h3>Coin Toss</h3></summary>
 <ul class="checklist">
   <li>Escort captains from your sideline to the center of the field, 3 minutes before kickoff.</li>
   <li>Introduce captains to each other; advise of any ground rules/irregularities.</li>
@@ -388,7 +400,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Kickoff (Free Kicks)</h3></summary>
+<details class="phase"><summary><h3>Kickoff (Free Kicks)</h3></summary>
 <ul class="checklist">
   <li>Position: goal line, <strong>opposite the press box</strong> (see the Kickoff Formation diagram on the Overview tab).</li>
   <li>Obtain ready signals from the entire crew; sound whistle and give ready-for-play.</li>
@@ -399,7 +411,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Before the Snap (all scrimmage downs)</h3></summary>
+<details class="phase"><summary><h3>Before the Snap (all scrimmage downs)</h3></summary>
 <ul class="checklist">
   <li>Position deep and wide on the QB's throwing-arm side, 12&ndash;14 yards deep and wide.</li>
   <li>Check the offensive formation, count Team A, signal the count to <strong>U</strong> &ndash; closed fist for 11, open palm for fewer.</li>
@@ -407,7 +419,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Substitutions &amp; Player Counts</h3></summary>
+<details class="phase"><summary><h3>Substitutions &amp; Player Counts</h3></summary>
 <ul class="checklist">
   <li>You and <strong>U</strong> own the correct count on Team A, every down &ndash; see the <a class="sig" href="#s-count">Player Count Signal</a>.</li>
   <li>If Team A substitutes, hold the snap until Team B has a real chance to match.</li>
@@ -418,7 +430,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Running Plays</h3></summary>
+<details class="phase"><summary><h3>Running Plays</h3></summary>
 <ul class="checklist">
   <li>Help with the tackle on your side immediately after the snap.</li>
   <li>Watch action behind the line and the runner to the neutral zone; watch the QB on hand-offs/backward passes.</li>
@@ -428,7 +440,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Pass Plays</h3></summary>
+<details class="phase"><summary><h3>Pass Plays</h3></summary>
 <ul class="checklist">
   <li>Observe the near tackle at the snap; switch to the far tackle once the QB sets up to pass.</li>
   <li>When you read pass, back out at a 45&deg; angle, staying wide and deep to keep the play in front of you.</li>
@@ -439,7 +451,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Scrimmage Kicks (Punts)</h3></summary>
+<details class="phase"><summary><h3>Scrimmage Kicks (Punts)</h3></summary>
 <ul class="checklist">
   <li>Position slightly behind and to the <strong>L</strong> side of the kicker, watching the snap and flight to the kicker.</li>
   <li>Rule on contact with the kicker &ndash; <a class="foul" href="#f-roughingpasser">Roughing/Running Into the Kicker</a> (see Overview flowchart).</li>
@@ -448,7 +460,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Try &amp; Field Goal</h3></summary>
+<details class="phase"><summary><h3>Try &amp; Field Goal</h3></summary>
 <ul class="checklist">
   <li>Snapped on/outside B-15: position 10 yds wide of the kicker, facing the holder.</li>
   <li>Snapped inside B-15: position ~5 yds behind the holder, in line with the tee and goal posts.</li>
@@ -457,14 +469,14 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Goal Line</h3></summary>
+<details class="phase"><summary><h3>Goal Line</h3></summary>
 <ul class="checklist">
   <li>Same coverage as any short-yardage down &ndash; forward progress is usually determined by the sideline official.</li>
   <li>Do not back up other officials' TD signals.</li>
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Timeouts &amp; Two-Minute</h3></summary>
+<details class="phase"><summary><h3>Timeouts &amp; Two-Minute</h3></summary>
 <ul class="checklist">
   <li>Signal a full charged timeout facing the press box, pointing toward the requesting team.</li>
   <li>Only <strong>R</strong> may stop the clock for a coach's conference (Referee's Timeout).</li>
@@ -473,7 +485,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Close of Period / Half</h3></summary>
+<details class="phase"><summary><h3>Close of Period / Half</h3></summary>
 <ul class="checklist">
   <li>Sound whistle at time expiration only if the ball is dead; signal end of period with ball held overhead [S14].</li>
   <li>You are primarily responsible for determining the end of any period.</li>
@@ -481,7 +493,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Postgame</h3></summary>
+<details class="phase"><summary><h3>Postgame</h3></summary>
 <ul class="checklist">
   <li>Leave the field together with the crew &ndash; neither seek nor avoid coaches.</li>
   <li>Complete foul reports; obtain incident-report input from the crew if needed.</li>
@@ -495,30 +507,32 @@
   <div class="pocket-col">
     <h4 class="qrg-h">Procedure, Phase by Phase</h4>
     <ul class="mini-steps">
-      <li><strong>Pregame:</strong> arrive w/ crew, inspect field w/ L, meet coaches 4 min prior.</li>
-      <li><strong>Coin Toss:</strong> escort captains, present options, signal press box.</li>
-      <li><strong>Kickoff:</strong> goal line, opposite press box; ready signals; watch offside/wedge.</li>
-      <li><strong>Pre-Snap:</strong> deep/wide on QB's arm side; count Team A.</li>
-      <li><strong>Run:</strong> help tackle at snap, stay w/ ball to neutral zone, clean up late hits.</li>
-      <li><strong>Pass:</strong> back out 45&deg;, protect passer, rule grounding/legality.</li>
-      <li><strong>Punt:</strong> behind/L of kicker, watch contact on kicker, direct OOB spot.</li>
-      <li><strong>Try/FG:</strong> position per snap distance, rule uprights, confirm before signaling score.</li>
-      <li><strong>Timeouts:</strong> only R stops clock for coach conference; Varsity 2-min at 2:00.</li>
-      <li><strong>Close of Period:</strong> whistle only on dead ball; signal end of period overhead.</li>
+      <li><strong>Pregame</strong> &ndash; arrive w/ crew &middot; inspect field w/ L &middot; meet coaches (4 min prior)</li>
+      <li><strong>Coin Toss</strong> &ndash; escort captains &middot; present options &middot; signal press box</li>
+      <li><strong>Kickoff</strong> &ndash; goal line, opposite press box &middot; ready signals &middot; watch offside/wedge</li>
+      <li><strong>Pre-Snap</strong> &ndash; deep/wide, QB's arm side &middot; count Team A</li>
+      <li><strong>Run</strong> &ndash; help tackle at snap &middot; stay w/ ball to neutral zone &middot; clean up late hits</li>
+      <li><strong>Pass</strong> &ndash; back out 45&deg; &middot; protect passer &middot; rule grounding/legality</li>
+      <li><strong>Punt</strong> &ndash; behind/L of kicker &middot; watch kicker contact &middot; direct OOB spot</li>
+      <li><strong>Try/FG</strong> &ndash; position per snap distance &middot; rule uprights &middot; confirm before signaling</li>
+      <li><strong>Timeouts</strong> &ndash; only R stops clock for coach conference &middot; Varsity 2-min at 2:00</li>
+      <li><strong>Close of Period</strong> &ndash; whistle only on dead ball &middot; signal end of period overhead</li>
     </ul>
   </div>
   <div class="pocket-col">
     <h4 class="qrg-h">Most Common Calls</h4>
-    <ul class="mini-steps">
-      <li>Roughing the Passer &ndash; <strong>15 yds,</strong> end of last run / prev. spot.</li>
-      <li>Intentional Grounding &ndash; <strong>5 yds + loss of down,</strong> spot of foul.</li>
-      <li>Illegal Forward Pass &ndash; <strong>5 yds,</strong> spot of foul.</li>
-      <li>Roughing/Running Into Kicker &ndash; <strong>15 / 5 yds,</strong> previous spot.</li>
-      <li>Unsportsmanlike Conduct &ndash; <strong>15 yds,</strong> prev./succeeding spot.</li>
-      <li>Delay of Game &ndash; <strong>5 yds,</strong> succeeding spot.</li>
-    </ul>
+    <table class="qrg pocket-table">
+      <tr><th>Foul</th><th>Yardage</th><th>Spot</th></tr>
+      <tr><td>Roughing the Passer</td><td><strong>15 yds</strong></td><td>End of last run / prev. spot</td></tr>
+      <tr><td>Intentional Grounding</td><td><strong>5 yds + LOD</strong></td><td>Spot of foul</td></tr>
+      <tr><td>Illegal Forward Pass</td><td><strong>5 yds</strong></td><td>Spot of foul</td></tr>
+      <tr><td>Roughing/Running Into Kicker</td><td><strong>15 / 5 yds</strong></td><td>Previous spot</td></tr>
+      <tr><td>Unsportsmanlike Conduct</td><td><strong>15 yds</strong></td><td>Prev./succeeding spot</td></tr>
+      <tr><td>Delay of Game</td><td><strong>5 yds</strong></td><td>Succeeding spot</td></tr>
+    </table>
   </div>
 </div>
+<button class="printbtn" onclick="printPocket(this)" type="button">&#128438; Print This Pocket Card</button>
 </div>
 </div>
 
@@ -526,20 +540,20 @@
 <div class="panel panel-u">
 <h2>Umpire (<strong>U</strong>)</h2>
 
-<details class="phase" open><summary><h3>Pregame</h3></summary>
+<details class="phase"><summary><h3>Pregame</h3></summary>
 <ul class="checklist">
   <li>Spot check player equipment &ndash; pads, braces, pants, shirts, tape &ndash; with team trainers.</li>
   <li>Arrange to meet the home-sideline captain with <strong>R</strong>, 4 minutes before kickoff.</li>
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Coin Toss</h3></summary>
+<details class="phase"><summary><h3>Coin Toss</h3></summary>
 <ul class="checklist">
   <li>Introduce your captain(s) to <strong>R</strong>; remain with <strong>R</strong> to witness the toss and verify choices.</li>
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Kickoff (Free Kicks)</h3></summary>
+<details class="phase"><summary><h3>Kickoff (Free Kicks)</h3></summary>
 <ul class="checklist">
   <li>Position: start center field, then move to the kicking team's restraining line, <strong>press-box side</strong> (see the Kickoff Formation diagram on the Overview tab).</li>
   <li>Count Team A players and instruct the kicker.</li>
@@ -549,7 +563,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Before the Snap (all scrimmage downs)</h3></summary>
+<details class="phase"><summary><h3>Before the Snap (all scrimmage downs)</h3></summary>
 <ul class="checklist">
   <li>Position 5&ndash;10 yards deep, opposite <strong>R</strong>'s side, avoiding linebacker sightlines.</li>
   <li>Know the five ineligibles (numbers 50&ndash;79); ensure at least five are present.</li>
@@ -557,7 +571,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Substitutions &amp; Player Counts</h3></summary>
+<details class="phase"><summary><h3>Substitutions &amp; Player Counts</h3></summary>
 <ul class="checklist">
   <li>You and <strong>R</strong> own the correct count on Team A, every down &ndash; see the <a class="sig" href="#s-count">Player Count Signal</a>.</li>
   <li>When <strong>R</strong> gives you the <a class="sig" href="#s-sub">Substitution Signal</a>, cover the ball (or stand near the snapper) to prevent the snap.</li>
@@ -566,7 +580,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Running Plays</h3></summary>
+<details class="phase"><summary><h3>Running Plays</h3></summary>
 <ul class="checklist">
   <li>Key the snapper and two guards; help with tackles if an obvious foul is visible.</li>
   <li>Check for <a class="foul" href="#f-holding">Holding</a> and illegal use of hands by both sides.</li>
@@ -574,7 +588,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Pass Plays</h3></summary>
+<details class="phase"><summary><h3>Pass Plays</h3></summary>
 <ul class="checklist">
   <li>Observe ineligible interior linemen and the legality of their numbers.</li>
   <li>When you read pass, move toward the neutral zone; know whether the pass crosses it.</li>
@@ -583,7 +597,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Scrimmage Kicks (Punts)</h3></summary>
+<details class="phase"><summary><h3>Scrimmage Kicks (Punts)</h3></summary>
 <ul class="checklist">
   <li>Position 8&ndash;10 yards deep, favoring the <strong>L</strong> side.</li>
   <li>Watch initial line charge for blocking fouls; be alert for illegal acts against the snapper.</li>
@@ -591,7 +605,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Try &amp; Field Goal</h3></summary>
+<details class="phase"><summary><h3>Try &amp; Field Goal</h3></summary>
 <ul class="checklist">
   <li>Adjust depth (~5 yds), favoring the <strong>L</strong> side; watch defensive linemen over the snapper.</li>
   <li>Watch for illegal action by Team B players not stationary within 1 yard of the LOS in a 3/4-point stance.</li>
@@ -599,7 +613,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Goal Line</h3></summary>
+<details class="phase"><summary><h3>Goal Line</h3></summary>
 <ul class="checklist">
   <li>Know the ineligibles; don't play as deep as on other scrimmage downs.</li>
   <li>Hustle to the pile on a quick thrust into the line &ndash; make sure the ball isn't moved forward after being declared dead.</li>
@@ -608,21 +622,21 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Timeouts</h3></summary>
+<details class="phase"><summary><h3>Timeouts</h3></summary>
 <ul class="checklist">
   <li>Take charge of the ball; confirm timeouts remaining for each team with <strong>R</strong>.</li>
   <li>Do not allow Team A to snap if Team B isn't ready (<a class="foul" href="#f-delay">Delay of Game</a>) after notification.</li>
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Close of Period / Half</h3></summary>
+<details class="phase"><summary><h3>Close of Period / Half</h3></summary>
 <ul class="checklist">
   <li>Keep <strong>R</strong> informed of remaining time; advise if time expired during the down.</li>
   <li>Transfer the ball to the new position at the end of each period.</li>
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Postgame</h3></summary>
+<details class="phase"><summary><h3>Postgame</h3></summary>
 <ul class="checklist">
   <li>Leave the field with the crew; provide input for any incident report.</li>
 </ul>
@@ -634,29 +648,31 @@
   <div class="pocket-col">
     <h4 class="qrg-h">Procedure, Phase by Phase</h4>
     <ul class="mini-steps">
-      <li><strong>Pregame:</strong> spot-check equipment w/ trainers.</li>
-      <li><strong>Coin Toss:</strong> introduce captain to R, witness toss.</li>
-      <li><strong>Kickoff:</strong> center field &rarr; kicking line, press-box side; count A, watch offside.</li>
-      <li><strong>Pre-Snap:</strong> 5&ndash;10 yds deep, opposite R; know the 5 ineligibles.</li>
-      <li><strong>Run:</strong> key snapper/guards, check holding/hands, cover point of attack.</li>
-      <li><strong>Pass:</strong> watch ineligibles downfield, move to neutral zone.</li>
-      <li><strong>Punt:</strong> 8&ndash;10 yds deep favoring L side, watch line/snapper action.</li>
-      <li><strong>Try/FG:</strong> ~5 yds deep favoring L; solely rules crossbar on short snaps.</li>
-      <li><strong>Goal Line:</strong> shallower depth, hustle to pile, never signal score.</li>
-      <li><strong>Timeouts:</strong> take charge of ball, confirm counts w/ R.</li>
+      <li><strong>Pregame</strong> &ndash; spot-check equipment w/ trainers</li>
+      <li><strong>Coin Toss</strong> &ndash; introduce captain to R &middot; witness toss</li>
+      <li><strong>Kickoff</strong> &ndash; center field &rarr; kicking line, press-box side &middot; count A &middot; watch offside</li>
+      <li><strong>Pre-Snap</strong> &ndash; 5&ndash;10 yds deep, opposite R &middot; know the 5 ineligibles</li>
+      <li><strong>Run</strong> &ndash; key snapper/guards &middot; check holding/hands &middot; cover point of attack</li>
+      <li><strong>Pass</strong> &ndash; watch ineligibles downfield &middot; move to neutral zone</li>
+      <li><strong>Punt</strong> &ndash; 8&ndash;10 yds deep, favor L side &middot; watch line/snapper action</li>
+      <li><strong>Try/FG</strong> &ndash; ~5 yds deep, favor L &middot; solely rules crossbar on short snaps</li>
+      <li><strong>Goal Line</strong> &ndash; shallower depth &middot; hustle to pile &middot; never signal score</li>
+      <li><strong>Timeouts</strong> &ndash; take charge of ball &middot; confirm counts w/ R</li>
     </ul>
   </div>
   <div class="pocket-col">
     <h4 class="qrg-h">Most Common Calls</h4>
-    <ul class="mini-steps">
-      <li>Holding (Offense) &ndash; <strong>10 yds,</strong> previous spot.</li>
-      <li>Illegal Block Below the Waist &ndash; <strong>15 yds,</strong> previous spot.</li>
-      <li>Chop Block &ndash; <strong>15 yds,</strong> previous spot.</li>
-      <li>Ineligible Receiver Downfield &ndash; <strong>5 yds,</strong> previous spot.</li>
-      <li>Illegal Touching &ndash; <strong>5 yds + loss of down,</strong> previous spot.</li>
-    </ul>
+    <table class="qrg pocket-table">
+      <tr><th>Foul</th><th>Yardage</th><th>Spot</th></tr>
+      <tr><td>Holding (Offense)</td><td><strong>10 yds</strong></td><td>Previous spot</td></tr>
+      <tr><td>Illegal Block Below the Waist</td><td><strong>15 yds</strong></td><td>Previous spot</td></tr>
+      <tr><td>Chop Block</td><td><strong>15 yds</strong></td><td>Previous spot</td></tr>
+      <tr><td>Ineligible Receiver Downfield</td><td><strong>5 yds</strong></td><td>Previous spot</td></tr>
+      <tr><td>Illegal Touching</td><td><strong>5 yds + LOD</strong></td><td>Previous spot</td></tr>
+    </table>
   </div>
 </div>
+<button class="printbtn" onclick="printPocket(this)" type="button">&#128438; Print This Pocket Card</button>
 </div>
 </div>
 
@@ -665,7 +681,7 @@
 <h2>Head Linesman (<strong>H</strong>)</h2>
 <p style="font-size:.9em;color:#555;"><strong>H</strong> runs the chain crew &ndash; the duties below fold in the Chain Crew's own procedures at the points where they matter to your position. The standalone Chain Crew page has the full detail if you're studying that role on its own.</p>
 
-<details class="phase" open><summary><h3>Pregame</h3></summary>
+<details class="phase"><summary><h3>Pregame</h3></summary>
 <ul class="checklist">
   <li>Organize the chain crew; locate the yardage chain and down marker.</li>
   <li>Check the chain against the field's 10-yard measure; confirm the tape marker is at the exact midpoint.</li>
@@ -674,7 +690,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Coin Toss</h3></summary>
+<details class="phase"><summary><h3>Coin Toss</h3></summary>
 <ul class="checklist">
   <li>After captains are escorted to midfield, take position at the 9-yard marks on your side.</li>
   <li>Do not allow uninvolved team members inside the 9-yard marks.</li>
@@ -682,7 +698,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Kickoff (Free Kicks)</h3></summary>
+<details class="phase"><summary><h3>Kickoff (Free Kicks)</h3></summary>
 <p style="font-size:.85em;color:#a34;">The printed TASO manual's diagram and its own text paragraph disagree on this one &ndash; the diagram clearly shows <strong>H</strong> on the sideline <strong>opposite</strong> the press box (matching your own understanding); a text paragraph elsewhere in the manual says "press box side," which appears to be a manual typo. This guide follows the diagram.</p>
 <ul class="checklist">
   <li>Position: kicking team's restraining line, <strong>opposite the press box</strong> &ndash; the same sideline you hold the chains on for scrimmage downs (see the Kickoff Formation diagram on the Overview tab).</li>
@@ -694,7 +710,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Before the Snap (all scrimmage downs)</h3></summary>
+<details class="phase"><summary><h3>Before the Snap (all scrimmage downs)</h3></summary>
 <ul class="checklist">
   <li>Read the offensive formation; know your eligible-receiver responsibilities.</li>
   <li>Watch for <a class="foul" href="#f-encroachment">Encroachment</a> or a <a class="foul" href="#f-falsestart">False Start</a> by the offense.</li>
@@ -703,7 +719,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Substitutions &amp; Player Counts</h3></summary>
+<details class="phase"><summary><h3>Substitutions &amp; Player Counts</h3></summary>
 <ul class="checklist">
   <li>You and <strong>L</strong> own the correct count on Team B, every down &ndash; see the <a class="sig" href="#s-count">Player Count Signal</a>.</li>
   <li>If Team A substitutes (no-huddle, or after breaking the huddle) on your sideline, give the <a class="sig" href="#s-sub">Substitution Signal</a> &ndash; that tells everyone Team B must get a chance to match.</li>
@@ -711,7 +727,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Running Plays</h3></summary>
+<details class="phase"><summary><h3>Running Plays</h3></summary>
 <ul class="checklist">
   <li>Watch blocking in front of the runner on your side for <a class="foul" href="#f-holding">Holding</a>, <a class="foul" href="#f-clipping">Clipping</a>, <a class="foul" href="#f-chopblock">Chop Block</a>.</li>
   <li>Mark forward progress on plays to your side; if the play goes out of bounds near you, move directly into the area.</li>
@@ -719,7 +735,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Pass Plays</h3></summary>
+<details class="phase"><summary><h3>Pass Plays</h3></summary>
 <ul class="checklist">
   <li>Help check the legality of interior offensive linemen's numbers.</li>
   <li>Rule whether a pass is caught/touched at, behind, or beyond the neutral zone.</li>
@@ -729,7 +745,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Scrimmage Kicks (Punts)</h3></summary>
+<details class="phase"><summary><h3>Scrimmage Kicks (Punts)</h3></summary>
 <ul class="checklist">
   <li>Responsible for the entire neutral zone at the snap; know if the kick crosses it.</li>
   <li>Watch offensive backs and defenders in the line for <a class="foul" href="#f-holding">Holding</a>.</li>
@@ -737,14 +753,14 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Try &amp; Field Goal</h3></summary>
+<details class="phase"><summary><h3>Try &amp; Field Goal</h3></summary>
 <ul class="checklist">
   <li>Take regular position on the sideline, observing the snap's legality and the whole neutral zone.</li>
   <li>Snapped inside B-15: you are solely responsible for <a class="foul" href="#f-roughingpasser">Roughing/Running Into the Kicker or Holder</a>.</li>
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Goal Line</h3></summary>
+<details class="phase"><summary><h3>Goal Line</h3></summary>
 <ul class="checklist">
   <li>Sprint to the goal line at the snap when the ball is on/inside B's 5.</li>
   <li>Turn your hips to look straight down the goal line &ndash; you must be on the line to rule on a score.</li>
@@ -752,21 +768,21 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Timeouts &amp; Two-Minute</h3></summary>
+<details class="phase"><summary><h3>Timeouts &amp; Two-Minute</h3></summary>
 <ul class="checklist">
   <li>Notify the coach on your sideline of timeouts remaining and time left in the period.</li>
   <li>At the Two-Minute Timeout (Varsity), join the on-field crew meeting, then relay the details to your head coach.</li>
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Close of Period / Half</h3></summary>
+<details class="phase"><summary><h3>Close of Period / Half</h3></summary>
 <ul class="checklist">
   <li>Keep <strong>R</strong> informed of remaining time.</li>
   <li>Between periods: reverse the chain crew's position to the opposite end of the field, following the standard chain-clip procedure.</li>
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Postgame</h3></summary>
+<details class="phase"><summary><h3>Postgame</h3></summary>
 <ul class="checklist">
   <li>Leave the field with the crew; complete any incident report for fouls you called or witnessed.</li>
 </ul>
@@ -778,31 +794,33 @@
   <div class="pocket-col">
     <h4 class="qrg-h">Procedure, Phase by Phase</h4>
     <ul class="mini-steps">
-      <li><strong>Pregame:</strong> organize chain crew, check chain/tape midpoint.</li>
-      <li><strong>Coin Toss:</strong> hold 9-yd marks on your side, hold game ball.</li>
-      <li><strong>Kickoff:</strong> kicking-team restraining line, opposite press box; watch offside.</li>
-      <li><strong>Pre-Snap:</strong> straddle neutral zone; watch false start/encroachment/offside.</li>
-      <li><strong>Run:</strong> watch blocking on your side, mark forward progress.</li>
-      <li><strong>Pass:</strong> rule catch vs. neutral zone, watch interference/ineligible downfield.</li>
-      <li><strong>Punt:</strong> own the neutral zone, watch gunners, rule kick-catch interference.</li>
-      <li><strong>Try/FG:</strong> sideline position, solely rules kicker/holder contact (inside B-15).</li>
-      <li><strong>Goal Line:</strong> sprint to goal line on snap inside B-5; confirm before signaling TD.</li>
-      <li><strong>Close of Period:</strong> reverse chain crew to opposite end between 1st/3rd.</li>
+      <li><strong>Pregame</strong> &ndash; organize chain crew &middot; check chain/tape midpoint</li>
+      <li><strong>Coin Toss</strong> &ndash; hold 9-yd marks on your side &middot; hold game ball</li>
+      <li><strong>Kickoff</strong> &ndash; kicking-team restraining line, opposite press box &middot; watch offside</li>
+      <li><strong>Pre-Snap</strong> &ndash; straddle neutral zone &middot; watch false start/encroachment/offside</li>
+      <li><strong>Run</strong> &ndash; watch blocking on your side &middot; mark forward progress</li>
+      <li><strong>Pass</strong> &ndash; rule catch vs. neutral zone &middot; watch interference/ineligible downfield</li>
+      <li><strong>Punt</strong> &ndash; own the neutral zone &middot; watch gunners &middot; rule kick-catch interference</li>
+      <li><strong>Try/FG</strong> &ndash; sideline position &middot; solely rules kicker/holder contact (inside B-15)</li>
+      <li><strong>Goal Line</strong> &ndash; sprint to goal line on snap inside B-5 &middot; confirm before signaling TD</li>
+      <li><strong>Close of Period</strong> &ndash; reverse chain crew to opposite end (1st/3rd)</li>
     </ul>
   </div>
   <div class="pocket-col">
     <h4 class="qrg-h">Most Common Calls</h4>
-    <ul class="mini-steps">
-      <li>False Start &ndash; <strong>5 yds,</strong> succeeding spot.</li>
-      <li>Encroachment &ndash; <strong>5 yds,</strong> succeeding spot.</li>
-      <li>Offside &ndash; <strong>5 yds,</strong> prev. spot (live) / succeeding spot (dead-ball).</li>
-      <li>Clipping &ndash; <strong>15 yds,</strong> spot of foul / prev. spot.</li>
-      <li>Offensive Pass Interference &ndash; <strong>10 yds,</strong> previous spot.</li>
-      <li>Defensive Pass Interference &ndash; <strong>spot of foul</strong> (or 15 yds if &ge;15 yds downfield).</li>
-    </ul>
+    <table class="qrg pocket-table">
+      <tr><th>Foul</th><th>Yardage</th><th>Spot</th></tr>
+      <tr><td>False Start</td><td><strong>5 yds</strong></td><td>Succeeding spot</td></tr>
+      <tr><td>Encroachment</td><td><strong>5 yds</strong></td><td>Succeeding spot</td></tr>
+      <tr><td>Offside</td><td><strong>5 yds</strong></td><td>Prev. (live) / succeeding (dead-ball)</td></tr>
+      <tr><td>Clipping</td><td><strong>15 yds</strong></td><td>Spot of foul / prev. spot</td></tr>
+      <tr><td>Offensive Pass Interference</td><td><strong>10 yds</strong></td><td>Previous spot</td></tr>
+      <tr><td>Defensive Pass Interference</td><td><strong>Spot of foul</strong> (or 15 if &ge;15 yds)</td><td>Spot of foul / prev. spot</td></tr>
+    </table>
     <p style="font-size:.78em;margin-top:6px;">Full Kick-Catch Interference &amp; Roughing/Running Into Kicker flowcharts: Overview tab.</p>
   </div>
 </div>
+<button class="printbtn" onclick="printPocket(this)" type="button">&#128438; Print This Pocket Card</button>
 </div>
 </div>
 
@@ -810,21 +828,21 @@
 <div class="panel panel-l">
 <h2>Line Judge (<strong>L</strong>)</h2>
 
-<details class="phase" open><summary><h3>Pregame</h3></summary>
+<details class="phase"><summary><h3>Pregame</h3></summary>
 <ul class="checklist">
   <li>Instruct the auxiliary box operator on duties and use of the line-to-gain indicator, if used.</li>
   <li>Confirm game balls are available; brief Ball Assistants on their duties.</li>
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Coin Toss</h3></summary>
+<details class="phase"><summary><h3>Coin Toss</h3></summary>
 <ul class="checklist">
   <li>Take position at the 9-yard marks on your side once captains are at midfield.</li>
   <li>Hold the game ball for the team on your side until the toss is decided.</li>
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Kickoff (Free Kicks)</h3></summary>
+<details class="phase"><summary><h3>Kickoff (Free Kicks)</h3></summary>
 <ul class="checklist">
   <li>Position: goal line, <strong>press-box side</strong> (see the Kickoff Formation diagram on the Overview tab).</li>
   <li>Count Team B players.</li>
@@ -834,33 +852,33 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Before the Snap (all scrimmage downs)</h3></summary>
+<details class="phase"><summary><h3>Before the Snap (all scrimmage downs)</h3></summary>
 <ul class="checklist">
   <li>Read the offensive formation; know your eligible-receiver responsibilities.</li>
   <li>Watch for <a class="foul" href="#f-encroachment">Encroachment</a> or <a class="foul" href="#f-falsestart">False Start</a> by the offense, <a class="foul" href="#f-offside">Offside</a> by the defense.</li>
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Substitutions &amp; Player Counts</h3></summary>
+<details class="phase"><summary><h3>Substitutions &amp; Player Counts</h3></summary>
 <ul class="checklist">
   <li>You and <strong>H</strong> own the correct count on Team B, every down &ndash; see the <a class="sig" href="#s-count">Player Count Signal</a>.</li>
   <li>If Team A substitutes on your sideline, give the <a class="sig" href="#s-sub">Substitution Signal</a> the same way <strong>H</strong> does.</li>
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Running Plays</h3></summary>
+<details class="phase"><summary><h3>Running Plays</h3></summary>
 <ul class="checklist">
   <li>Same duties as <strong>H</strong>, mirrored on the press-box side &ndash; watch blocking for <a class="foul" href="#f-holding">Holding</a>/<a class="foul" href="#f-clipping">Clipping</a>, mark forward progress on your side.</li>
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Pass Plays</h3></summary>
+<details class="phase"><summary><h3>Pass Plays</h3></summary>
 <ul class="checklist">
   <li>Same duties as <strong>H</strong>, mirrored &ndash; rule catch/touch relative to the neutral zone, watch for interference and <a class="foul" href="#f-inelig">Ineligible Receiver Downfield</a>.</li>
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Scrimmage Kicks (Punts)</h3></summary>
+<details class="phase"><summary><h3>Scrimmage Kicks (Punts)</h3></summary>
 <ul class="checklist">
   <li>Position outside and in front of the deep receiver(s); mark the end of the kick with your bean bag.</li>
   <li>Primarily responsible for ruling on fair-catch signals in your area.</li>
@@ -869,34 +887,34 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Try &amp; Field Goal</h3></summary>
+<details class="phase"><summary><h3>Try &amp; Field Goal</h3></summary>
 <ul class="checklist">
   <li>Position slightly behind the end line, center of the goal &ndash; sole responsibility for both uprights and crossbar (or per snap-distance variant, see manual).</li>
   <li>Sound whistle when the ball becomes dead on the attempt.</li>
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Goal Line</h3></summary>
+<details class="phase"><summary><h3>Goal Line</h3></summary>
 <ul class="checklist">
   <li>Same as <strong>H</strong> &ndash; sprint to the goal line, rule on the score only when positive, mark forward progress otherwise.</li>
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Timeouts &amp; Two-Minute</h3></summary>
+<details class="phase"><summary><h3>Timeouts &amp; Two-Minute</h3></summary>
 <ul class="checklist">
   <li>Confirm the game clock is stopped; time the timeout period.</li>
   <li>Coordinate radio/TV breaks; signal when the timeout is over.</li>
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Close of Period / Half</h3></summary>
+<details class="phase"><summary><h3>Close of Period / Half</h3></summary>
 <ul class="checklist">
   <li>Receive the ball from <strong>R</strong> at the close of the 2nd period; begin timing halftime once <strong>R</strong> starts the clock.</li>
   <li>Sound three short whistle blasts when 20 seconds remain in the intermission.</li>
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Postgame</h3></summary>
+<details class="phase"><summary><h3>Postgame</h3></summary>
 <ul class="checklist">
   <li>Leave the field with the crew; complete any incident report for fouls you called or witnessed.</li>
 </ul>
@@ -908,30 +926,32 @@
   <div class="pocket-col">
     <h4 class="qrg-h">Procedure, Phase by Phase</h4>
     <ul class="mini-steps">
-      <li><strong>Pregame:</strong> brief auxiliary box operator, confirm game balls/Ball Assistants.</li>
-      <li><strong>Coin Toss:</strong> hold 9-yd marks on your side, hold game ball.</li>
-      <li><strong>Kickoff:</strong> goal line, press-box side; count B, watch holding/clipping in return.</li>
-      <li><strong>Pre-Snap:</strong> straddle neutral zone; watch false start/encroachment/offside.</li>
-      <li><strong>Run:</strong> mirror H &ndash; watch blocking on your side, mark forward progress.</li>
-      <li><strong>Pass:</strong> rule catch vs. neutral zone, watch interference/ineligible downfield.</li>
-      <li><strong>Punt:</strong> outside/in front of deep receiver, bean bag marks end of kick, rule fair catch.</li>
-      <li><strong>Try/FG:</strong> behind end line, center of goal; sole call on uprights/crossbar.</li>
-      <li><strong>Goal Line:</strong> sprint to goal line; confirm before signaling TD.</li>
-      <li><strong>Timeouts:</strong> confirm clock stopped, time the timeout, coordinate TV/radio.</li>
+      <li><strong>Pregame</strong> &ndash; brief auxiliary box operator &middot; confirm balls/Ball Assistants</li>
+      <li><strong>Coin Toss</strong> &ndash; hold 9-yd marks on your side &middot; hold game ball</li>
+      <li><strong>Kickoff</strong> &ndash; goal line, press-box side &middot; count B &middot; watch holding/clipping in return</li>
+      <li><strong>Pre-Snap</strong> &ndash; straddle neutral zone &middot; watch false start/encroachment/offside</li>
+      <li><strong>Run</strong> &ndash; mirror H &middot; watch blocking on your side &middot; mark forward progress</li>
+      <li><strong>Pass</strong> &ndash; rule catch vs. neutral zone &middot; watch interference/ineligible downfield</li>
+      <li><strong>Punt</strong> &ndash; outside/front of deep receiver &middot; bean bag marks end of kick &middot; rule fair catch</li>
+      <li><strong>Try/FG</strong> &ndash; behind end line, center of goal &middot; sole call on uprights/crossbar</li>
+      <li><strong>Goal Line</strong> &ndash; sprint to goal line &middot; confirm before signaling TD</li>
+      <li><strong>Timeouts</strong> &ndash; confirm clock stopped &middot; time the timeout &middot; coordinate TV/radio</li>
     </ul>
   </div>
   <div class="pocket-col">
     <h4 class="qrg-h">Most Common Calls</h4>
-    <ul class="mini-steps">
-      <li>False Start &ndash; <strong>5 yds,</strong> succeeding spot.</li>
-      <li>Encroachment &ndash; <strong>5 yds,</strong> succeeding spot.</li>
-      <li>Offside &ndash; <strong>5 yds,</strong> prev. spot (live) / succeeding spot (dead-ball).</li>
-      <li>Clipping &ndash; <strong>15 yds,</strong> spot of foul / prev. spot.</li>
-      <li>Defensive Pass Interference &ndash; <strong>spot of foul</strong> (or 15 yds if &ge;15 yds downfield).</li>
-    </ul>
+    <table class="qrg pocket-table">
+      <tr><th>Foul</th><th>Yardage</th><th>Spot</th></tr>
+      <tr><td>False Start</td><td><strong>5 yds</strong></td><td>Succeeding spot</td></tr>
+      <tr><td>Encroachment</td><td><strong>5 yds</strong></td><td>Succeeding spot</td></tr>
+      <tr><td>Offside</td><td><strong>5 yds</strong></td><td>Prev. (live) / succeeding (dead-ball)</td></tr>
+      <tr><td>Clipping</td><td><strong>15 yds</strong></td><td>Spot of foul / prev. spot</td></tr>
+      <tr><td>Defensive Pass Interference</td><td><strong>Spot of foul</strong> (or 15 if &ge;15 yds)</td><td>Spot of foul / prev. spot</td></tr>
+    </table>
     <p style="font-size:.78em;margin-top:6px;">Full Kick-Catch Interference flowchart: Overview tab.</p>
   </div>
 </div>
+<button class="printbtn" onclick="printPocket(this)" type="button">&#128438; Print This Pocket Card</button>
 </div>
 </div>
 
@@ -940,7 +960,7 @@
 <h2>Chain Crew / Clock Operator</h2>
 <p style="font-size:.9em;color:#555;">Not an on-field official, but essential crew. Reports to <strong>H</strong> (the "Lines-person").</p>
 
-<details class="phase" open><summary><h3>Pregame</h3></summary>
+<details class="phase"><summary><h3>Pregame</h3></summary>
 <ul class="checklist">
   <li>Confirm attendance/arrival with <strong>H</strong> no later than two days before game day.</li>
   <li>Arrive dressed, ready to take the field 30 minutes before kickoff.</li>
@@ -950,7 +970,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>During the Game &ndash; Chains</h3></summary>
+<details class="phase"><summary><h3>During the Game &ndash; Chains</h3></summary>
 <ul class="checklist">
   <li>Down box always goes first, at the forward-most point of the ball as indicated by <strong>H</strong>.</li>
   <li>Back stake sets immediately behind the down box; line-to-gain stake pulls the chain taut, no kinks.</li>
@@ -960,7 +980,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Measurements</h3></summary>
+<details class="phase"><summary><h3>Measurements</h3></summary>
 <ul class="checklist">
   <li>Hold position until <strong>H</strong> signals you onto the field.</li>
   <li>Line-to-gain stake holder hands the stake to the Umpire; <strong>H</strong> places the clip at the spot the Line Judge indicates.</li>
@@ -968,7 +988,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Clock Operator &ndash; Game Clock</h3></summary>
+<details class="phase"><summary><h3>Clock Operator &ndash; Game Clock</h3></summary>
 <ul class="checklist">
   <li>Set to 12:00 at the start of every period.</li>
   <li>Start on legal touching of a free kick, or on the Referee's start-the-clock signal, or on the snap if no signal is given.</li>
@@ -977,7 +997,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Clock Operator &ndash; Play Clock</h3></summary>
+<details class="phase"><summary><h3>Clock Operator &ndash; Play Clock</h3></summary>
 <ul class="checklist">
   <li>Always starts at 40 seconds unless there's an administrative stoppage &ndash; then it's 25.</li>
   <li>25-second situations: penalty administration, start of a period, measurement, Team A helmet off/injury, Team B awarded a first down, after any kick down or score, timeout by either team or an official, touchback, try down, period extension, inadvertent whistle.</li>
@@ -985,7 +1005,7 @@
 </ul>
 </details>
 
-<details class="phase" open><summary><h3>Close of Period / Half</h3></summary>
+<details class="phase"><summary><h3>Close of Period / Half</h3></summary>
 <ul class="checklist">
   <li>Reverse the chains to the opposite end of the field between the 1st and 3rd periods, following <strong>H</strong>'s clip-and-reverse procedure.</li>
   <li>Halftime intermission clock: 28:00 max (Varsity, regular season) unless otherwise agreed.</li>
@@ -1019,6 +1039,7 @@
     </ul>
   </div>
 </div>
+<button class="printbtn" onclick="printPocket(this)" type="button">&#128438; Print This Pocket Card</button>
 </div>
 </div>
 
@@ -1493,8 +1514,25 @@ Penalties vary by which violation occurred: entering/leaving illegally or not pl
   Built for personal officiating study/reference. Sourced from the TASO Football Officials Manual for a Crew of 4 (rev. June 2026), the 2026 NCAA Football Rules, and the 2026 UIL Exceptions to NCAA Football Rules. Not an official publication of TASO, the UIL, or the NCAA &ndash; always defer to the current official manuals and your chapter's guidance.
 </footer>
 
+<div id="printArea"></div>
+
 <script>
   function goBack(){ window.history.back(); }
+
+  function printPocket(btn){
+    var pocket = btn.closest('.pocket');
+    var clone = pocket.cloneNode(true);
+    var btnInClone = clone.querySelector('.printbtn');
+    if (btnInClone) { btnInClone.remove(); }
+    var printArea = document.getElementById('printArea');
+    printArea.innerHTML = '';
+    printArea.appendChild(clone);
+    document.body.classList.add('printing-pocket');
+    window.print();
+  }
+  window.addEventListener('afterprint', function(){
+    document.body.classList.remove('printing-pocket');
+  });
 </script>
 </body>
 </html>
